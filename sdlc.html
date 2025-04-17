@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>מחזור חיי פיתוח תוכנה (SDLC) – ISTQB</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* פריסה כללית */
+    .page-container {
+      display: flex;
+      max-width: 1200px;
+      margin: 2rem auto;
+      gap: 2rem;
+    }
+    /* תפריט תוכן עניינים */
+    .toc {
+      flex: 0 0 250px;
+      position: sticky;
+      top: 1rem;
+      padding: 1rem;
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      direction: rtl;
+    }
+    .toc h2 {
+      margin-top: 0;
+      font-size: 1.2rem;
+      text-align: center;
+    }
+    .toc ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .toc li {
+      margin: 0.5rem 0;
+    }
+    .toc a {
+      color: #007BFF;
+      text-decoration: none;
+    }
+    .toc a:hover {
+      text-decoration: underline;
+    }
+    /* תוכן העמוד */
+    .content {
+      flex: 1;
+      direction: rtl;
+    }
+    .content section {
+      margin-bottom: 2.5rem;
+    }
+    .content h2 {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 0.3rem;
+    }
+    .content p,
+    .content ul {
+      line-height: 1.6;
+      margin: 0.75rem 0;
+    }
+    .content ul {
+      margin-left: 1.5rem;
+    }
+    .content li {
+      margin: 0.5rem 0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>מחזור חיי פיתוח תוכנה (SDLC)</h1>
+    <nav><a href="index.html" class="back-home">עמוד הבית</a></nav>
+  </header>
+
+  <div class="page-container">
+    <aside class="toc">
+      <h2>תוכן העניינים</h2>
+      <ul>
+        <li><a href="#overview">1. סקירה כללית</a></li>
+        <li><a href="#requirements">2. איפיון ודרישות</a></li>
+        <li><a href="#design">3. תכנון מערכת</a></li>
+        <li><a href="#development">4. פיתוח ו־Unit Testing</a></li>
+        <li><a href="#integration">5. אינטגרציה</a></li>
+        <li><a href="#system-testing">6. בדיקת מערכת</a></li>
+        <li><a href="#acceptance">7. בדיקת קבלה</a></li>
+        <li><a href="#deployment">8. פריסה</a></li>
+        <li><a href="#maintenance">9. תחזוקה ותמיכה</a></li>
+      </ul>
+    </aside>
+
+    <main class="content">
+      <section id="overview">
+        <h2>1. סקירה כללית</h2>
+        <p>
+          SDLC (Software Development Life Cycle) מגדיר תהליך מובנה ובסיסי לפיתוח איכותי של תוכנה –
+          החל מאיסוף הדרישות ועד לתחזוקה אחרי הפריסה. התהליך מסייע לשלוט בעלויות, לוחות זמנים,
+          ואיכות המוצר.
+        </p>
+      </section>
+
+      <section id="requirements">
+        <h2>2. איפיון ודרישות (Requirements Analysis)</h2>
+        <ul>
+          <li>איסוף דרישות פונקציונליות ולא פונקציונליות.</li>
+          <li>ראיונות עם בעלי עניין, סיעור מוחין (Brainstorming).</li>
+          <li>סקירות דרישות (Reviews) לאיתור חוסרים וקונפליקטים.</li>
+          <li>יצירת Traceability Matrix לקישור בין דרישות ל־Test Cases.</li>
+        </ul>
+      </section>
+
+      <section id="design">
+        <h2>3. תכנון מערכת (System Design)</h2>
+        <p>
+          הגדרת ארכיטקטורת המערכת, מודולים, מסדי נתונים וממשקי API.
+          יוצרים UML diagrams, ERD לנתונים ותיעוד טכני מפורט.
+        </p>
+      </section>
+
+      <section id="development">
+        <h2>4. פיתוח ו‑Unit Testing</h2>
+        <ul>
+          <li>כתיבת קוד על ידי מפתחים בשיטות Agile/Waterfall.</li>
+          <li>בדיקות יחידה (Unit Tests) לכיסוי פונקציות או מחלקות באמצעות JUnit, pytest ועוד.</li>
+          <li>ניתוח סטטי (Static Analysis) עם SonarQube לאיתור ריחות קוד.</li>
+        </ul>
+      </section>
+
+      <section id="integration">
+        <h2>5. אינטגרציה (Integration Testing)</h2>
+        <p>
+          בדיקה של שילוב הרכיבים: תקשורת שירותים, חיבור UI ל־backend,
+          שיטות טעינת Big Bang, Top‑Down, Bottom‑Up.
+        </p>
+      </section>
+
+      <section id="system-testing">
+        <h2>6. בדיקת מערכת (System Testing)</h2>
+        <ul>
+          <li>בדיקות פונקציונליות קצה־לקצה.</li>
+          <li>בדיקות ביצועים (Performance) עם JMeter.</li>
+          <li>בדיקות אבטחה (Security) עם OWASP ZAP.</li>
+        </ul>
+      </section>
+
+      <section id="acceptance">
+        <h2>7. בדיקת קבלה (Acceptance Testing)</h2>
+        <p>
+          בדיקות Alpha/Beta אצל משתמשי קצה לקבלת משוב חי לפני שחרור חופשי.
+        </p>
+      </section>
+
+      <section id="deployment">
+        <h2>8. פריסה (Deployment)</h2>
+        <p>
+          העברה לשלבי Production והרצת Smoke Tests לווידוא יציבות ראשונית.
+        </p>
+      </section>
+
+      <section id="maintenance">
+        <h2>9. תחזוקה ותמיכה (Maintenance)</h2>
+        <ul>
+          <li>טיפול בתקלות בסביבת הייצור (Bug Fixes).</li>
+          <li>הפצת עדכונים ושדרוגים (Enhancements).</li>
+          <li>שמירה על Regression Suite למניעת שבירת קוד קיים.</li>
+        </ul>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    <p>© 2025 | נבנה באהבה עבור בודקי התוכנה העתידיים</p>
+  </footer>
+</body>
+</html>

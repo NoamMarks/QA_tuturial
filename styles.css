@@ -1,0 +1,493 @@
+/* Reset בסיסי */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* עיצוב גוף הדף */
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f4f8;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* כותרת עליונה */
+  header {
+    background-color: #ffffff;
+    padding: 1.5rem;
+    text-align: center;
+    border-bottom: 2px solid #e0e0e0;
+    margin-bottom: 1rem;
+  }
+  
+  header h1 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+  
+  header p {
+    font-size: 1rem;
+    color: #666;
+  }
+  
+  /* ניווט */
+  nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    margin: 1rem 0;
+  }
+  
+  nav ul li {
+    margin: 0 1rem;
+  }
+  
+  nav ul li a {
+    text-decoration: none;
+    color: #007BFF;
+    font-weight: bold;
+  }
+  
+  nav ul li a:hover {
+    text-decoration: underline;
+  }
+  
+  /* עיצוב טופס החיפוש */
+  form {
+    margin-top: 1rem;
+  }
+  
+  form input[type="search"] {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 200px;
+  }
+  
+  form button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border: none;
+    background-color: #007BFF;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 0.5rem;
+  }
+  
+  form button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* עיצוב תוכן העמוד */
+  main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+  }
+  
+  /* עיצוב תחתון (Footer) */
+  footer {
+    text-align: center;
+    padding: 1rem;
+    margin-top: 1rem;
+    background-color: #ffffff;
+    border-top: 1px solid #e0e0e0;
+  }
+  
+  /* התאמה למסכים קטנים */
+  @media (max-width: 600px) {
+    nav ul {
+      flex-direction: column;
+    }
+  
+    form input[type="search"] {
+      width: 100%;
+      margin-bottom: 0.5rem;
+    }
+  
+    form button {
+      width: 100%;
+    }
+  }
+  
+/* Hero Section עם רקע גראדיינט */
+.hero-section {
+    background: linear-gradient(135deg, #c17f1ce2 0%, #dda748 100%);
+    color: #fff;
+    padding: 4rem 1rem 6rem;
+    text-align: center;
+    border-bottom: 2px solid #af7507;
+    margin-bottom: 1rem;
+  }
+  /* ===== Hero Section ===== */
+.hero-section {
+  /* יוצר קונטיינר פלקס ממורכז אנכית ואופקית */
+  display: flex;
+  flex-direction: column;    /* כותרת מעל התת־כותרת */
+  justify-content: center;   /* מרכז אנכית */
+  align-items: center;       /* מרכז אופקית */
+  text-align: center;        /* טקסט ממורכז */
+  padding: 4rem 1rem;        /* שים לב: תוכל לכוונן את הערכים לפי רצונך */
+  background: linear-gradient(135deg, #c17f1ce2 0%, #dda748 100%);
+  color: #fff;
+}
+
+/* מורידים מרווח מיותר סביב הכותרת והתת־כותרת */
+.hero-section .hero-content h1 {
+  margin: 0;
+  padding: 0;
+}
+
+.hero-section .hero-content .subtitle {
+  /* קיים */
+  margin: 0.5rem 0 0;
+  padding: 0;
+  font-size: 2rem;
+  font-weight: bold;
+
+
+  /* הוספה חדשה */
+  display: inline-block;   /* תופס רק את רוחב הטקסט */
+  max-width: 800px;        /* רוחב מקסימלי לתוך ה־Hero */
+  text-align: center;      /* ממרכז פנימה כל שורה */
+  line-height: 1.4;        /* גובה שורה מאוזן */
+  white-space: normal;     /* מאפשר שבירת שורות רגילה */
+}
+
+  .hero-content h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+  }
+  
+  .hero-content .subtitle {
+    /* כאן נשנה את צבע התת-כותרת והוספת הצללה */
+    color: #fff; /* צבע לבן לקריאה מושלמת על רקע כתום */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); /* הצללה קלה */
+    font-size: 1.5rem; /* גודל הטקסט */
+    max-width: 600px;
+    margin: 0.5rem auto 2rem;
+    line-height: 1.6;
+    /* אפשר להוסיף font-weight אם תרצה: font-weight: 600; */
+  }
+  
+  .hero-search-form {
+    display: inline-flex;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  
+  .hero-search-form input[type="search"] {
+    width: 250px;
+    font-size: 1rem;
+  }
+  
+  .hero-search-form button {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s ease; /* הוספת אנימציה */
+  }
+  
+  .hero-search-form button:hover {
+    background-color: #004C82; /* שנה את הצבע במקרה של hover (אפשר לשנות לערך המועדף עליך) */
+  }
+  
+  /* סגנון הניווט הראשי לאחר ה-Hero */
+  .main-nav {
+    background-color: #f9f9f9;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .main-nav ul {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 1rem;
+    margin: 0;
+    list-style: none;
+  }
+  
+  .main-nav ul li {
+    margin: 0.5rem 1rem;
+  }
+  
+  .main-nav ul li a {
+    color: #007BFF;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    padding: 0.5rem 0.75rem;
+    border-radius: 4px;
+  }
+  
+  .main-nav ul li a:hover {
+    color: #fff;
+    background-color: #007BFF; /* אתה יכול לשנות את הצבע כאן – ערך זה מוסיף רקע כהה בעת hover */
+    text-decoration: none;
+  }
+  
+  /* אזור מידע כללי מתחת לניווט */
+  .landing-info {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem; /* הגדלנו padding כדי ליצור מראה 'כרטיס' */
+    text-align: center;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+  
+  .landing-info h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+  
+  .landing-info p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #555;
+  }
+  
+  /* עיצוב מחדש של ה-Footer */
+  footer {
+    text-align: center;
+    padding: 1rem;
+    margin-top: 2rem;
+    background-color: #fff;
+    border-top: 1px solid #e0e0e0;
+    color: #333;
+  }
+/* עיצוב עבור מיכל החיפוש (Search Area) */
+#searchArea {
+    width: 100% !important;
+    text-align: center !important;
+    margin: 1rem 0 !important;
+  }
+  
+  #searchArea form {
+    display: inline-block !important;
+  }
+  
+  /* עיצוב לתוצאות החיפוש */
+  #liveSearchResults {
+    max-height: 300px !important;       /* גובה קבוע לתיבת התוצאות */
+    overflow-y: auto !important;          /* גלילה פנימית אם יש הרבה תוצאות */
+    margin-top: 1rem !important;
+    background: transparent !important;   /* ללא רקע לבן */
+    border: none !important;              /* ללא גבולות */
+    padding: 0 !important;
+    color: #000 !important;               /* טקסט שחור */
+    text-align: left;                     /* יישור לטקסט, ניתן לשנות ל-center אם מעדיף */
+  }
+  
+  /* סגנון לרשימת התוצאות */
+  #liveSearchResults ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  #liveSearchResults li {
+    margin: 0.3rem 0;
+  }
+  
+  #liveSearchResults li a {
+    color: #000 !important;              /* טקסט שחור עבור הקישורים */
+    text-decoration: none;
+  }
+  
+  #liveSearchResults li a:hover {
+    text-decoration: underline;
+  }
+/* מוסיף רווח בין הטופס לבין ההודעה */
+#searchArea form {
+    margin-bottom: 1.5rem; /* או כמה שתרצה */
+  }
+  
+/* ===== עיצוב תפריט הניווט עם Flex ליישור במרכז ===== */
+.main-nav {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 150px;  /* או גובה אחר שתרצה כדי ליצור מרחב מתאים */
+    background: #f9f9f9;
+    z-index: 2;
+  }
+  
+  #noCategoriesMsg {
+    position: absolute;
+    top: 55%; /* אם אתה רוצה עוד יותר למטה, שים 60% */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #000;
+    font-weight: bold;
+    font-size: 1rem;
+    margin: 0;
+    z-index: 9999;
+  }
+  
+/* ===== ייבוא גופן Inter ===== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* ===== משתני עיצוב גלובליים ===== */
+:root {
+  --color-bg: #f7f7f8;          /* רקע כללי */
+  --color-card: #ffffff;        /* רקע "כרטיס" */
+  --color-text: #111827;        /* טקסט ראשי כהה */
+  --color-muted: #6b7280;       /* טקסט משני */
+  --color-accent: #10a37f;      /* צבע הדגשה */
+  --font-sans: 'Inter', sans-serif;
+}
+
+/* ===== Reset בסיסי ===== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ===== גופנים וצבעי גוף ===== */
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+}
+
+/* ===== קישורים ===== */
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* ===== כותרת עליונה ===== */
+header {
+  background: var(--color-card);
+  border-bottom: 1px solid #e5e7eb;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+header h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+header .back-home {
+  font-size: 0.9rem;
+  color: var(--color-accent);
+}
+
+/* ===== פריסה כללית של הדף ===== */
+.page-container {
+  display: flex;
+  max-width: 1200px;
+  margin: 2rem auto;
+  gap: 2rem;
+  padding: 0 1rem;
+}
+
+/* ===== תוכן עניינים (TOC) בצד ===== */
+.toc {
+  position: sticky;            /* יידבק בגלילה */
+  align-self: flex-start;      /* מאפשר sticky בתוך flex */
+  top: 70px;                   /* כייל את זה לפי גובה ההדר שלך */
+  right: 2rem;                 /* במצב RTL זה השמאל */
+  width: 250px;
+  max-height: calc(100vh - 70px); /* גובה מסך פחות גובה ה‐header */
+  padding: 1rem;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  z-index: 100;
+  overflow: visible;           /* כך שהכותרת לא תיחתך */
+}
+
+/* גלילה פנימית רק בתפריט עצמו, בלי לחתוך את כותרת ה־TOC */
+.toc ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: calc(100% - 2.5rem); /* שאר הגובה בלי הכותרת */
+  overflow-y: auto;
+  padding-right: 0.5rem;
+  margin-top: 1rem;
+}
+
+
+.toc li + li {
+  margin-top: 0.5rem;
+}
+
+.toc a {
+  display: block;
+  padding: 0.25rem 0;
+  color: #007BFF;
+  text-decoration: none;
+}
+.toc a:hover {
+  text-decoration: underline;
+}
+
+/* ===== תוכן העמוד ===== */
+.content {
+  flex: 1;
+}
+
+.content section {
+  margin-bottom: 2rem;
+  background: var(--color-card);
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.content h2 {
+  font-size: 1.4rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 0.3rem;
+}
+
+.content p,
+.content li {
+  color: var(--color-text);
+}
+
+.content ul,
+.content ol {
+  margin: 0.5rem 0 0.5rem 1.25rem;
+}
+
+.content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+.content th,
+.content td {
+  border: 1px solid #e5e7eb;
+  padding: 0.5rem;
+  text-align: right;
+}
+

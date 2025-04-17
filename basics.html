@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>יסודות הבדיקות – ISTQB</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* פריסה כללית */
+    .page-container {
+      display: flex;
+      max-width: 1200px;
+      margin: 2rem auto;
+      gap: 2rem;
+    }
+    /* תפריט תוכן עניינים בצד ימין */
+    .toc {
+      flex: 0 0 250px;
+      position: sticky;
+      top: 1rem;
+      padding: 1rem;
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      direction: rtl;
+    }
+    .toc h2 {
+      margin-top: 0;
+      font-size: 1.2rem;
+      text-align: center;
+    }
+    .toc ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .toc li {
+      margin: 0.5rem 0;
+    }
+    .toc a {
+      color: #007BFF;
+      text-decoration: none;
+    }
+    .toc a:hover {
+      text-decoration: underline;
+    }
+    /* תוכן העמוד */
+    .content {
+      flex: 1;
+      direction: rtl;
+    }
+    .content section {
+      margin-bottom: 2.5rem;
+    }
+    .content h2 {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 0.3rem;
+    }
+    .content p {
+      line-height: 1.6;
+      margin: 0.75rem 0;
+    }
+    .content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+    }
+    .content table, .content th, .content td {
+      border: 1px solid #ccc;
+    }
+    .content th, .content td {
+      padding: 0.5rem;
+      text-align: right;
+    }
+    .content ul {
+      margin: 0.5rem 0 0.5rem 1.5rem;
+    }
+    .content li {
+      margin: 0.5rem 0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>יסודות הבדיקות</h1>
+    <nav><a href="index.html" class="back-home">עמוד הבית</a></nav>
+  </header>
+
+  <div class="page-container">
+    <!-- תוכן עניינים -->
+    <aside class="toc">
+      <h2>תוכן העניינים</h2>
+      <ul>
+        <li><a href="#importance">1. חשיבות בדיקות תוכנה</a></li>
+        <li><a href="#objectives">2. מטרות הבדיקות</a></li>
+        <li><a href="#terms">3. מושגי יסוד וביטויים נפוצים</a></li>
+        <li><a href="#principles">4. שבעת עקרונות הבדיקות</a></li>
+        <li><a href="#levels">5. רמות בדיקה</a></li>
+        <li><a href="#process">6. מחזור חיי הבדיקה</a></li>
+        <li><a href="#classification">7. סוגי תקלות וקטלוג שלהן</a></li>
+        <li><a href="#approaches">8. שיטות וגישות בבדיקה</a></li>
+        <li><a href="#documentation">9. תיעוד בדיקות</a></li>
+        <li><a href="#metrics">10. מדדי בדיקה ו‑KPIs</a></li>
+      </ul>
+    </aside>
+
+    <!-- תוכן מלא -->
+    <main class="content">
+      <section id="importance">
+        <h2>1. חשיבות בדיקות תוכנה</h2>
+        <p>בדיקות תוכנה אינן “מרצון” אלא שלב הכרחי בכל פרויקט פיתוח:</p>
+        <ul>
+          <li><strong>חיסכון בעלויות תיקון</strong> – זיהוי באגים מוקדם חוסך 10–100 פעמים את עלות התיקון בשלב הייצור.</li>
+          <li><strong>הבטחת איכות ויציבות</strong> – מערכת שנבדקה היטב נחשבת לאמינה, ומשפרת את שביעות רצון המשתמש.</li>
+          <li><strong>מניעת סיכונים עסקיים</strong> – מוצר תקול עלול לגרום להפסדים כספיים, תביעות ופגיעה במוניטין.</li>
+          <li><strong>שיפור מתמיד בתהליך הפיתוח</strong> – משוב עסקי וטכני דרך בדיקות מובנות יוצר תהליך איכותי.</li>
+        </ul>
+      </section>
+
+      <section id="objectives">
+        <h2>2. מטרות הבדיקות</h2>
+        <ol>
+          <li><strong>איתור באגים (Defect Detection)</strong> – זיהוי שגיאות לוגיות ותקלות לפני שחרור.</li>
+          <li><strong>מניעת באגים (Defect Prevention)</strong> – ביקורות סטטיות מונעות הכנסת באגים.</li>
+          <li><strong>אימות דרישות (Requirement Verification)</strong> – הבטחה שהמוצר עומד בדרישות.</li>
+          <li><strong>הערכת איכות (Quality Assessment)</strong> – מדידת כיסוי בדיקות, כמות תקלות ויציבות.</li>
+          <li><strong>תמיכה בהחלטות שחרור</strong> – קבלת החלטה מבוססת על נתוני בדיקות.</li>
+        </ol>
+      </section>
+
+      <section id="terms">
+        <h2>3. מושגי יסוד וביטויים נפוצים</h2>
+        <table>
+          <tr><th>מונח</th><th>הגדרה</th></tr>
+          <tr><td>Error</td><td>טעות אנוש בקוד או בדרישות.</td></tr>
+          <tr><td>Defect / Fault</td><td>קוד שגורם להתנהגות בלתי צפויה.</td></tr>
+          <tr><td>Failure</td><td>סטייה מהתנהגות צפויה בזמן ריצה.</td></tr>
+          <tr><td>Root Cause (סיבת השורש)</td><td>הגורם העיקרי שהביא להיווצרות התקלה או הדפקט, שעליו יש להתמקד בתהליך התיקון כדי למנוע את הבעיה בעתיד.</td></tr>
+          
+          <tr><td>Test Case</td><td>תרחיש בדיקה עם תנאים, שלבים ותוצאה צפויה.</td></tr>
+          <tr><td>Test Suite</td><td>אוסף של Test Cases לאזור פונקציונלי.</td></tr>
+          <tr><td>Test Plan</td><td>מסמך אסטרטגיה, משאבים ולוחות זמנים.</td></tr>
+          <tr><td>Traceability Matrix</td><td>קישור בין דרישות ל־Test Cases.</td></tr>
+        </table>
+      </section>
+
+      <section id="principles">
+        <h2>4. שבעת עקרונות הבדיקות</h2>
+        <ol>
+          <li>בדיקות מגלות נוכחות באגים – אי־אפשר להוכיח שאין באגים.</li>
+          <li>בדיקה מלאה בלתי אפשרית – צריך דגימות חכמות.</li>
+          <li>בדיקה מוקדמת – עלות תיקון נמוכה יותר.</li>
+          <li>צבירת באגים (Defect Clustering) – 20% מהקוד מכיל 80% מהבאגים (Pareto).</li>
+          <li>Pesticide Paradox – יש לעדכן בדיקות כדי לגלות באגים חדשים.</li>
+          <li>בדיקה תלויה בהקשר – סוג הפרויקט קובע את סוג הבדיקות.</li>
+          <li>Absence‑of‑Errors Fallacy – עמידה בדרישות לא מבטיחה מוצר שימושי.</li>
+        </ol>
+      </section>
+
+      <section id="levels">
+        <h2>5. רמות בדיקה</h2>
+        <h3>5.1 בדיקת יחידה (Unit Testing)</h3>
+        <p>בדיקה של פונקציות או מחלקות בודדות, מבוצעת על־ידי מפתחי התוכנה עם כלים כמו JUnit, pytest.</p>
+        <h3>5.2 בדיקת אינטגרציה (Integration Testing)</h3>
+        <p>בדיקה של תקשורת בין מודולים ושירותי API; טיפוסי שיטות: Big Bang, Top‑Down, Bottom‑Up.</p>
+        <h3>5.3 בדיקת מערכת (System Testing)</h3>
+        <p>בדיקה מקצה‑לקצה של המערכת כולה בסביבת סימולציה של ייצור.</p>
+        <h3>5.4 בדיקת קבלה (Acceptance Testing)</h3>
+        <p>בדיקה תחת פיקוח הלקוח או משתמשי קצה; סוגים: Alpha, Beta, Contract, Regulatory.</p>
+      </section>
+
+      <section id="process">
+        <h2>6. מחזור חיי הבדיקה</h2>
+        <ol>
+          <li><strong>תכנון & בקרת בדיקות</strong> – קביעת מטרות, טווח, לוחות זמנים ומשאבים.</li>
+          <li><strong>ניתוח & תכנון</strong> – זיהוי תרחישי בדיקה, כתיבת Test Cases.</li>
+          <li><strong>הטמעה & הרצה</strong> – הכנת סביבה, הרצת Test Cases ותיעוד תוצאות.</li>
+          <li><strong>הערכת קריטריוני יציאה & דיווח</strong> – בדיקת עמידה במטרות והכנת דו"ח מסכם.</li>
+          <li><strong>פעילויות סגירה</strong> – הפקת לקחים, ארכיון Testware וסגירת Test Plan.</li>
+        </ol>
+      </section>
+
+      <section id="classification">
+        <h2>7. סוגי תקלות וקטלוג שלהן</h2>
+        <table>
+          <tr><th>קטגוריה</th><th>דוגמה</th><th>חומרה</th></tr>
+          <tr><td>Blocker/Critical</td><td>קריסה מלאה, איפוס נתונים</td><td>קריטית</td></tr>
+          <tr><td>Major</td><td>פיצ'ר עיקרי לא עובד</td><td>גבוהה</td></tr>
+          <tr><td>Minor/Cosmetic</td><td>טעות כתיב, עיצוב קלוקל</td><td>נמוכה</td></tr>
+          <tr><td>Performance</td><td>זמני טעינה ארוכים</td><td>גבוהה</td></tr>
+          <tr><td>Security</td><td>SQL Injection, XSS</td><td>קריטית</td></tr>
+          <tr><td>Usability</td><td>ניווט לא אינטואיטיבי</td><td>בינונית</td></tr>
+        </table>
+      </section>
+
+        <section id="approaches">
+          <h2>8. שיטות וגישות בבדיקה</h2>
+        
+          <h3>8.1 בדיקה “קופסה שחורה” (Black‑Box Testing)</h3>
+          <p>מתמקדת בפונקציונליות בלבד, ללא גישה לקוד המקור.</p>
+          <ul>
+            <li>
+              <strong>Equivalence Partitioning (חלוקת משבצות)</strong><br>
+              מחלקים קבוצת קלטים למשבצות (classes) שבהן התגובה זהה.  
+              <em>דוגמה:</em> שדה גיל (0–120) מחולק ל־<br>
+              • גיל תקין (0–120) → בוחרים 0, 60, 120<br>
+              • גיל מתחת לטווח (<0) → -1, -5<br>
+              • גיל מעל לטווח (>120) → 121, 200
+            </li>
+            <li>
+              <strong>Boundary Value Analysis (ניתוח ערכי קצה)</strong><br>
+              בודקים את ערכי הקצה של כל משבצת, מאחר ובאגים מתרכזים שם.  
+              <em>תרחישי בדיקה לדוגמה:</em> 0, 1, 119, 120, -1, 121
+            </li>
+            <li>
+              <strong>Decision Table Testing (בדיקות טבלת החלטה)</strong><br>
+              בונים טבלה שממפה תנאים לפעולות כדי לכסות כל הקומבינציות.  
+              <em>טבלה לדוגמה:</em><br>
+              <table>
+                <tr><th>מחובר?</th><th>מוסמך?</th><th>פעולה</th></tr>
+                <tr><td>כן</td><td>כן</td><td>גישה מלאה</td></tr>
+                <tr><td>כן</td><td>לא</td><td>גישה מוגבלת</td></tr>
+                <tr><td>לא</td><td>כן</td><td>פנה להתחברות</td></tr>
+                <tr><td>לא</td><td>לא</td><td>סרב גישה</td></tr>
+              </table>
+            </li>
+            <li>
+              <strong>State Transition Testing (בדיקות מעבר מצב)</strong><br>
+              מתבססים על דיאגרמת מצבים ומעברים.  
+              <em>תרחיש לדוגמה:</em> טלפון חכם – מצבים: כבוי, נעול, פתוח; מעברים: on, lock, unlock.
+            </li>
+            <li>
+              <strong>Use Case Testing (בדיקות תרחישי שימוש)</strong><br>
+              בונים תרחישי בדיקה על בסיס “סיפור משתמש” (User Story).  
+              <em>תרחיש לדוגמה:</em> “הוסף מוצר לעגלה → עדכן כמות → בצע תשלום” כולל תרחישי קצה (כרטיס פג תוקף).
+            </li>
+          </ul>
+        
+          <h3>8.2 בדיקה “קופסה לבנה” (White‑Box Testing)</h3>
+          <p>מתמקדת במבנה הקוד ובזרימת הלוגיקה:</p>
+          <ul>
+            <li><strong>Statement Coverage (כיסוי שורות)</strong> – כל שורת קוד רצה לפחות פעם אחת.</li>
+            <li><strong>Branch Coverage (כיסוי ענפים)</strong> – כל תנאי (if/else) נבדק בשני הענפים.</li>
+            <li><strong>Path Coverage (כיסוי מסלולים)</strong> – כל המסלולים האפשריים בגרף השליטה.</li>
+            <li><strong>Condition Coverage (כיסוי תנאים)</strong> – כל ביטוי לוגי נבדק בכל הקומבינציות.</li>
+          </ul>
+        
+          <h3>8.3 בדיקות מבוססות ניסיון (Experience‑Based Testing)</h3>
+          <ul>
+            <li><strong>Exploratory Testing (בדיקות סקרניות)</strong> – הבודק חוקר את המערכת ללא תסריט קבוע, מגלה באגים בלתי צפויים.</li>
+            <li><strong>Error Guessing (ניחוש שגיאות)</strong> – הבודק מנחש היכן עשויים להופיע באגים לפי ניסיון.</li>
+            <li><strong>Checklist‑Based Testing (בדיקות מבוססות רשימת בדיקה)</strong> – שימוש ברשימת פריטים (checklist) כדי לוודא כיסוי נושאים מרכזיים.</li>
+          </ul>
+        
+          <h3>8.4 בדיקות מבוססות סיכון (Risk‑Based Testing)</h3>
+          <p>ממפים רכיבים לפי רמת סיכון (השפעה והסתברות לכישלון) – ומקדישים משאבים לרכיבים הקריטיים ביותר.</p>
+        
+          <h3>8.5 בדיקות סטטיות (Static Testing)</h3>
+          <ul>
+            <li><strong>Reviews &amp; Walkthroughs (סקירות וסיורי בדיקה)</strong> – בדיקה ידנית של דרישות, עיצוב וקוד ללא הרצה.</li>
+            <li><strong>Inspections (בדיקות פורמליות)</strong> – תהליך פורמלי עם תפקידים (Moderator, Reader, Recorder) ודיווח מסודר.</li>
+            <li><strong>Static Analysis Tools (כלים לניתוח סטטי)</strong> – כלים אוטומטיים (כמו SonarQube, ESLint) לזיהוי בעיות לפני הרצה.</li>
+          </ul>
+        </section>
+         
+
+      <section id="documentation">
+        <h2>9. תיעוד בדיקות</h2>
+        <ol>
+          <li>Test Plan – אסטרטגיה, טווח, סיכונים.</li>
+          <li>Test Strategy – קווים מנחים ארגוניים.</li>
+          <li>Test Case Specification – פירוט תרחישים.</li>
+          <li>Traceability Matrix – כיסוי דרישות.</li>
+          <li>Test Incident Report – תיעוד מפורט של באגים.</li>
+          <li>Test Summary Report – סיכום תוצאות ומדדים.</li>
+        </ol>
+      </section>
+
+      <section id="metrics">
+        <h2>10. מדדי בדיקה ו‑KPIs</h2>
+        <ul>
+          <li><strong>Requirement Coverage:</strong> אחוז דרישות מכוסות.</li>
+          <li><strong>Defect Density:</strong> באגים ל‑KLOC.</li>
+          <li><strong>Defect Leakage:</strong> באגים שברחו לסביבת הייצור.</li>
+          <li><strong>MTTD / MTTR:</strong> זמני זיהוי ותיקון ממוצעים.</li>
+          <li><strong>Test Execution Rate:</strong> מהירות הרצת Test Cases.</li>
+        </ul>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    <p>© 2025 | נבנה באהבה עבור בודקי התוכנה העתידיים</p>
+  </footer>
+</body>
+</html>

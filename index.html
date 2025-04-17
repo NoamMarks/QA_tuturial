@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ברוך הבא לאתר הלומדה לבודק תוכנה – ISTQB</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Hero Section: כותרת גדולה, תיאור קצר וטופס חיפוש מרכזי -->
+  <header class="hero-section">
+    <div class="hero-content">
+      <h1 dir="rtl">
+        ברוך הבא לאתר הלומדה לבודק תוכנה – 
+        <span dir="ltr">ISTQB</span>
+      </h1>
+      <p class="subtitle" dir="rtl">
+        המקום שלך ללמוד, לתרגל ולהתכונן לבחינת <span dir="ltr">ISTQB</span> בצורה פשוטה, נוחה וידידותית
+      </p>
+      
+<!-- בתוך index.html מחוץ ל־header -->
+</header>
+
+<div id="searchArea">
+  <form id="liveSearchForm" autocomplete="off">
+    <input
+      id="searchInput"
+      type="search"
+      name="q"
+      placeholder="חיפוש תוכן..."
+      aria-label="חיפוש תוכן"
+      autocomplete="off"
+    >
+  </form>
+  
+    </form>
+  <p id="noCategoriesMsg" style="display: none;">אין קטגוריות להצגה</p>
+</div>
+
+
+      <script>
+ 
+      </script>
+            
+    </div>
+  </header>
+
+  <!-- תפריט ניווט מרכזי עם רקע בהיר -->
+  <nav class="main-nav">
+    <div id="navItemsContainer">
+      <ul>
+        <li><a href="basics.html">יסודות הבדיקות</a></li>
+        <li><a href="sdlc.html">מחזור חיי תוכנה (SDLC)</a></li>
+        <li><a href="test-design.html">טכניקות לעיצוב בדיקות</a></li>
+        <li><a href="test-management.html">ניהול בדיקות</a></li>
+        <li><a href="types.html">סוגי בדיקות תוכנה</a></li>
+        <li><a href="tools.html">כלים תומכי בדיקות</a></li>
+        <li><a href="api-postman.html">בדיקות API ו-Postman</a></li>
+        <li><a href="automation.html">אוטומציה</a></li>
+        <li><a href="performance.html">בדיקות עומסים וביצועים</a></li>
+        <li><a href="agile-scrum.html">מתודולוגיות Agile &amp; Scrum</a></li>
+      </ul>
+    </div>
+    <!-- אלמנט ההודעה – מוסתר כברירת מחדל -->
+    <p id="noCategoriesMsg" style="display: none;">אין קטגוריות להצגה</p>
+  </nav>
+  
+
+  <!-- אזור תוכן קצר או הכרזה (ניתן להרחיב בעתיד) -->
+  <main class="landing-info">
+    <h2>כל מה שצריך, במקום אחד</h2>
+    <p>
+      בעמוד זה תוכלו למצוא את כל הנושאים הדרושים להכנה מקיפה לקראת הבחינה: יסודות הבדיקות, מחזור חיי תוכנה, ניהול בדיקות, אוטומציה ועוד המון תכנים ותרגולים מעשיים.
+    </p>
+  </main>
+
+  <footer>
+    <p>© 2025 | נבנה באהבה עבור בודקי התוכנה העתידיים</p>
+  </footer>
+  
+  <script>
+    // בוחר את שדה החיפוש
+const searchInput = document.getElementById("searchInput");
+// בחר את כל הפריטים שבתוך div#navItemsContainer, לא מהכל
+const navItems = document.querySelectorAll("#navItemsContainer ul li");
+const noCategoriesMsg = document.getElementById("noCategoriesMsg");
+
+searchInput.addEventListener("input", function() {
+  const query = searchInput.value.toLowerCase().trim();
+  let matchedCount = 0;
+  
+  navItems.forEach(function(item) {
+    const linkText = item.textContent.toLowerCase();
+    if (linkText.indexOf(query) > -1 || query === "") {
+      item.style.display = "inline-block"; 
+      matchedCount++;
+    } else {
+      item.style.display = "none";
+    }
+  });
+  
+  // אם לא נמצאו פריטים מותאמים, תציג את ההודעה במרכז
+  if (matchedCount === 0) {
+    noCategoriesMsg.style.display = "block";
+  } else {
+    noCategoriesMsg.style.display = "none";
+  }
+});
+
+  
+  </script>
+  
+</body>
+</html>

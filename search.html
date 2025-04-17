@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>תוצאות חיפוש</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>תוצאות חיפוש</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">עמוד הבית</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <div id="searchResults">
+      <!-- כאן יופיעו תוצאות החיפוש -->
+    </div>
+  </main>
+  <footer>
+    <p>© 2025</p>
+  </footer>
+  
+  <!-- קוד JavaScript שמבצע את החיפוש -->
+  <script>
+    // קריאה לפרמטר ה"q" מה-URL (למשל: ?q=בדיקות)
+    const urlParams = new URLSearchParams(window.location.search);
+    const query = urlParams.get('q');
+
+    // מערך של דפים לחיפוש – כאן מגדירים נתונים בסיסיים עבור העמודים
+    const pages = [
+  {
+    title: "יסודות הבדיקות",
+    url: "basics.html",
+    content: "בדיקות תוכנה, עקרונות, חשיבות התכנון והביצוע"
+  },
+  {
+    title: "מחזור חיי תוכנה (SDLC)",
+    url: "sdlc.html",
+    content: "מחזור חיי תוכנה כולל שלבים כגון תכנון, פיתוח, בדיקות והפצה"
+  },
+  {
+    title: "טכניקות לעיצוב בדיקות",
+    url: "test-design.html",
+    content: "שיטות לעיצוב בדיקות כגון בדיקת קופסה שחורה, קופסה לבנה ובדיקות מבוססות סיכון"
+  },
+  {
+    title: "ניהול בדיקות",
+    url: "test-management.html",
+    content: "מדיניות, תכנון וניהול בדיקות תוך שימוש בכלים מתקדמים"
+  },
+  {
+    title: "סוגי בדיקות תוכנה",
+    url: "types.html",
+    content: "בדיקות פונקציונליות, לא פונקציונליות, בדיקות אבטחה ועוד"
+  },
+  {
+    title: "כלים תומכי בדיקות",
+    url: "tools.html",
+    content: "כלי בדיקות, ניהול בדיקות ואוטומציה, כגון Selenium, JIRA, וכדומה"
+  },
+  {
+    title: "בדיקות API ו-Postman",
+    url: "api-postman.html",
+    content: "בדיקת שירותי API, שימוש ב-Postman להגשת בקשות ובדיקת תגובות"
+  },
+  {
+    title: "אוטומציה",
+    url: "automation.html",
+    content: "שיטות ואסטרטגיות לאוטומציה של תהליכי בדיקה"
+  },
+  {
+    title: "בדיקות עומסים וביצועים",
+    url: "performance.html",
+    content: "בדיקות ביצועים ועומסים, ניתוח ובקרה של ביצועי מערכת"
+  },
+  {
+    title: "מתודולוגיות Agile & Scrum",
+    url: "agile-scrum.html",
+    content: "שיטות עבודה אג'יליות, Scrum, Kanban ותהליכים נלווים"
+  }
+];
+
+    // פונקציה שמבצעת את החיפוש: בודקת אם מילת החיפוש מופיעה בכותרת או בתוכן
+    function performSearch(query) {
+      if (!query) {
+        return [];
+      }
+      query = query.toLowerCase();
+      return pages.filter(page => {
+        return page.title.toLowerCase().includes(query) || page.content.toLowerCase().includes(query);
+      });
+    }
+
+    // פונקציה שמציגה את תוצאות החיפוש בעמוד
+    function displayResults(results) {
+      const resultsDiv = document.getElementById("searchResults");
+      if (results.length === 0) {
+        resultsDiv.innerHTML = "<p>לא נמצאו תוצאות עבור: <strong>" + query + "</strong></p>";
+      } else {
+        let html = "<p>תוצאות חיפוש עבור: <strong>" + query + "</strong></p><ul>";
+        results.forEach(page => {
+          html += '<li><a href="' + page.url + '">' + page.title + "</a></li>";
+        });
+        html += "</ul>";
+        resultsDiv.innerHTML = html;
+      }
+    }
+
+    // ביצוע החיפוש והצגת התוצאות
+    const results = performSearch(query);
+    displayResults(results);
+  </script>
+</body>
+</html>

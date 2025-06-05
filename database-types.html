@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>סוגי בסיסי נתונים ל-System Design</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>סוגי בסיסי נתונים שכל מתכנת חייב להכיר</h1>
+    <nav><a href="index.html" class="back-home">עמוד הבית</a></nav>
+  </header>
+
+  <div class="page-container">
+    <aside class="toc">
+      <h2>תוכן העניינים</h2>
+      <ul>
+        <li><a href="#relational">1. Relational Databases</a></li>
+        <li><a href="#in-memory">2. In-Memory Databases</a></li>
+        <li><a href="#key-value">3. Key-Value Stores</a></li>
+        <li><a href="#document">4. Document Databases</a></li>
+        <li><a href="#wide-column">5. Wide-Column Stores</a></li>
+        <li><a href="#graph">6. Graph Databases</a></li>
+        <li><a href="#time-series">7. Time-Series Databases</a></li>
+        <li><a href="#search">8. Search Databases</a></li>
+        <li><a href="#vector">9. Vector Databases</a></li>
+        <li><a href="#distributed">10. Distributed Databases</a></li>
+        <li><a href="#quiz">שאלון לתרגול</a></li>
+      </ul>
+    </aside>
+
+    <main class="content">
+      <section id="relational">
+        <h2>1. Relational Databases</h2>
+        <p><strong>דוגמה:</strong> MySQL, PostgreSQL, SQL Server<br>
+        <strong>שימוש:</strong> נתונים מובנים עם קשרים חזקים<br>
+        <strong>יתרון:</strong> עקביות, תמיכה מלאה ב-ACID ושאילתות SQL מורכבות<br>
+        <strong>חיסרון:</strong> פחות גמיש לשינויים במבנה, קשה יותר לסקייל</p>
+      </section>
+
+      <section id="in-memory">
+        <h2>2. In-Memory Databases</h2>
+        <p><strong>דוגמה:</strong> Redis, Memcached<br>
+        <strong>שימוש:</strong> מהירות תגובה קיצונית, מטמון, סשנים<br>
+        <strong>יתרון:</strong> מהיר במיוחד, תמיכה בהתמדה (Redis)<br>
+        <strong>חיסרון:</strong> יקר בזיכרון, מוגבל בנפח הנתונים</p>
+      </section>
+
+      <section id="key-value">
+        <h2>3. Key-Value Stores</h2>
+        <p><strong>דוגמה:</strong> DynamoDB, Redis (כ-KV store)<br>
+        <strong>שימוש:</strong> גישה פשוטה לפי מפתח ייחודי<br>
+        <strong>יתרון:</strong> סופר מהיר, סקיילביליטי מצוינת<br>
+        <strong>חיסרון:</strong> לא תומך בשאילתות מורכבות או יחסים</p>
+      </section>
+
+      <section id="document">
+        <h2>4. Document Databases</h2>
+        <p><strong>דוגמה:</strong> MongoDB, CouchDB<br>
+        <strong>שימוש:</strong> גמישות במבנה הנתונים, אפליקציות JSON-based<br>
+        <strong>יתרון:</strong> תמיכה מובנית ב-JSON, שאילתות על תוכן המסמך<br>
+        <strong>חיסרון:</strong> פחות יעיל ליחסים מורכבים, עלולים לגרום לכפילות נתונים</p>
+      </section>
+
+      <section id="wide-column">
+        <h2>5. Wide-Column Stores</h2>
+        <p><strong>דוגמה:</strong> Cassandra, HBase<br>
+        <strong>שימוש:</strong> כתיבה וקריאה מהירה בסקייל גבוה<br>
+        <strong>יתרון:</strong> סקיילבילי מאוד, ביצועים גבוהים<br>
+        <strong>חיסרון:</strong> מורכבות בעיצוב הסכימה ובניהול</p>
+      </section>
+
+      <section id="graph">
+        <h2>6. Graph Databases</h2>
+        <p><strong>דוגמה:</strong> Neo4j, Amazon Neptune<br>
+        <strong>שימוש:</strong> ניתוח קשרים מורכבים בין ישויות<br>
+        <strong>יתרון:</strong> אידיאלי לרשתות חברתיות, המלצות, גילוי הונאות<br>
+        <strong>חיסרון:</strong> לא מתאים לנתונים שטוחים, ביצועים איטיים יותר בשאילתות פשוטות</p>
+      </section>
+
+      <section id="time-series">
+        <h2>7. Time-Series Databases</h2>
+        <p><strong>דוגמה:</strong> InfluxDB, TimescaleDB<br>
+        <strong>שימוש:</strong> נתוני ניטור, מדדים, IoT<br>
+        <strong>יתרון:</strong> מותאם לנתונים תלויי זמן, דחיסה יעילה<br>
+        <strong>חיסרון:</strong> מקרה שימוש ייחודי, לא מתאים לשאילתות כלליות</p>
+      </section>
+
+      <section id="search">
+        <h2>8. Search Databases</h2>
+        <p><strong>דוגמה:</strong> Elasticsearch, Solr<br>
+        <strong>שימוש:</strong> חיפושי טקסט חופשי, ניתוח לוגים<br>
+        <strong>יתרון:</strong> חיפוש חכם ומהיר, תמיכה בטקסט לא מובנה<br>
+        <strong>חיסרון:</strong> לא בסיס נתונים ראשי, צורך בסינכרון עם DB אחר</p>
+      </section>
+
+      <section id="vector">
+        <h2>9. Vector Databases</h2>
+        <p><strong>דוגמה:</strong> Pinecone, Weaviate, FAISS<br>
+        <strong>שימוש:</strong> AI, חיפוש דמיון, המלצות מבוססות ML<br>
+        <strong>יתרון:</strong> מותאם לוקטורים, תמיכה בחיפוש קרבה<br>
+        <strong>חיסרון:</strong> מתמחה רק בנתונים וקטוריים, עלות גבוהה</p>
+      </section>
+
+      <section id="distributed">
+        <h2>10. Distributed Databases</h2>
+        <p><strong>דוגמה:</strong> CockroachDB, Spanner<br>
+        <strong>שימוש:</strong> זמינות ועמידות גבוהה, אפליקציות גלובליות<br>
+        <strong>יתרון:</strong> מבוזר, עמיד לכשלים, סקיילביליטי גבוהה<br>
+        <strong>חיסרון:</strong> תפעול מורכב, עלות גבוהה, latency גבוהה יותר</p>
+      </section>
+
+      <section id="quiz">
+        <h2>שאלון לתרגול</h2>
+        <ul>
+          <li><strong>באיזה סוג DB תשתמש למערכת לוגים בזמן אמת?</strong><br>
+          <em>תשובה: Time-Series DB כמו InfluxDB או Search DB כמו Elasticsearch</em></li>
+          
+          <li><strong>מה ההבדל המרכזי בין Document ל-Key-Value?</strong><br>
+          <em>תשובה: Document DB מבין את מבנה הנתונים (JSON) ומאפשר שאילתות על התוכן, בעוד Key-Value רק מחזיר ערך שלם לפי מפתח</em></li>
+          
+          <li><strong>למה Graph DB עדיף על Relational במערכת קשרים חברתיים?</strong><br>
+          <em>תשובה: Graph DB מותאם לחיפוש קשרים רב-שכבתיים (חברים של חברים) ביעילות רבה יותר מ-JOINs מורכבים</em></li>
+        </ul>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    <p>© 2025 | נבנה באהבה עבור לומדת המתכנתים</p>
+  </footer>
+</body>
+</html>

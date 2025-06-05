@@ -13,7 +13,7 @@
       margin: 2rem auto;
       gap: 2rem;
     }
-    /* תפריט תוכן עניינים */
+    /* תפריט תוכן עניינים בצד */
     .toc {
       flex: 0 0 250px;
       position: sticky;
@@ -59,16 +59,29 @@
       border-bottom: 2px solid #ddd;
       padding-bottom: 0.3rem;
     }
+    .content h3 {
+      font-size: 1.2rem;
+      margin-top: 1rem;
+    }
     .content p,
-    .content ul {
+    .content ul,
+    .content ol {
       line-height: 1.6;
       margin: 0.75rem 0;
     }
-    .content ul {
+    .content ul,
+    .content ol {
       margin-left: 1.5rem;
     }
     .content li {
       margin: 0.5rem 0;
+    }
+    .template {
+      background: #ffffff;
+      border: 1px solid #ccc;
+      padding: 1rem;
+      border-radius: 4px;
+      margin-bottom: 1rem;
     }
   </style>
 </head>
@@ -82,93 +95,203 @@
     <aside class="toc">
       <h2>תוכן העניינים</h2>
       <ul>
-        <li><a href="#overview">1. סקירה כללית</a></li>
-        <li><a href="#requirements">2. איפיון ודרישות</a></li>
-        <li><a href="#design">3. תכנון מערכת</a></li>
-        <li><a href="#development">4. פיתוח ו־Unit Testing</a></li>
-        <li><a href="#integration">5. אינטגרציה</a></li>
-        <li><a href="#system-testing">6. בדיקת מערכת</a></li>
-        <li><a href="#acceptance">7. בדיקת קבלה</a></li>
-        <li><a href="#deployment">8. פריסה</a></li>
-        <li><a href="#maintenance">9. תחזוקה ותמיכה</a></li>
+        <li><a href="#intro">מבוא ל‑SDLC</a></li>
+        <li><a href="#planning">1. תכנון (Planning)</a></li>
+        <li><a href="#analysis">2. ניתוח (Analysis)</a></li>
+        <li><a href="#design">3. עיצוב (Design)</a></li>
+        <li><a href="#implementation">4. יישום (Implementation)</a></li>
+        <li><a href="#testing">5. בדיקות ואינטגרציה (Testing & Integration)</a></li>
+        <li><a href="#deployment">6. פריסה (Deployment)</a></li>
+        <li><a href="#maintenance">7. תחזוקה (Maintenance)</a></li>
+        <li><a href="#models">מתודולוגיות SDLC</a></li>
+        <li><a href="#devops">שילוב DevOps</a></li>
+        <li><a href="#shiftleft">פרקטיקות Shift‑Left</a></li>
+        <li><a href="#architectures">ארכיטקטורות מודרניות</a></li>
+        <li><a href="#templates">תבניות לדוגמה</a></li>
+        <li><a href="#summary">סיכום</a></li>
       </ul>
     </aside>
 
     <main class="content">
-      <section id="overview">
-        <h2>1. סקירה כללית</h2>
-        <p>
-          SDLC (Software Development Life Cycle) מגדיר תהליך מובנה ובסיסי לפיתוח איכותי של תוכנה –
-          החל מאיסוף הדרישות ועד לתחזוקה אחרי הפריסה. התהליך מסייע לשלוט בעלויות, לוחות זמנים,
-          ואיכות המוצר.
-        </p>
+      <section id="intro">
+        <h2>מבוא ל‑SDLC</h2>
+        <p><strong>מה זה?</strong> מחזור חיי פיתוח תוכנה (Software Development Life Cycle) הוא מסגרת שיטתית המגדירה את כל התהליכים הנדרשים לפיתוח, תחזוקה ושיפור מערכות תוכנה איכותיות.</p>
       </section>
 
-      <section id="requirements">
-        <h2>2. איפיון ודרישות (Requirements Analysis)</h2>
+      <section id="planning">
+        <h2>1. תכנון (Planning)</h2>
+        <h3>מרכיבים עיקריים:</h3>
         <ul>
-          <li>איסוף דרישות פונקציונליות ולא פונקציונליות.</li>
-          <li>ראיונות עם בעלי עניין, סיעור מוחין (Brainstorming).</li>
-          <li>סקירות דרישות (Reviews) לאיתור חוסרים וקונפליקטים.</li>
-          <li>יצירת Traceability Matrix לקישור בין דרישות ל־Test Cases.</li>
+          <li><strong>הערכת היתכנות:</strong> בחינת האפשרות הטכנית והכלכלית.</li>
+          <li><strong>הגדרת משאבים:</strong> זיהוי צוות, תקציב, זמן וטכנולוגיות.</li>
+          <li><strong>ניהול סיכונים ראשוני:</strong> זיהוי סיכונים ואסטרטגיות מיטיגציה.</li>
+          <li><strong>תוכנית פרויקט:</strong> אבני דרך, תפקידים ולוחות זמנים.</li>
+          <li><strong>ROI:</strong> ניתוח עלות מול תועלת והערכת ערך עסקי.</li>
+        </ul>
+        <h3>תוצרים:</h3>
+        <ul>
+          <li>Project Vision</li>
+          <li>Project Plan</li>
+          <li>Resource Estimation</li>
+          <li>Feasibility Study</li>
+        </ul>
+      </section>
+
+      <section id="analysis">
+        <h2>2. ניתוח (Analysis)</h2>
+        <h3>מרכיבים עיקריים:</h3>
+        <ul>
+          <li>איסוף דרישות: ראיונות, סקרים, תצפיות.</li>
+          <li>SRS (Software Requirements Specification).</li>
+          <li>ניתוח מחזיקי עניין והבנת צרכיהם.</li>
+          <li>תרשימי זרימת מידע ו‑Use Cases.</li>
+        </ul>
+        <h3>תוצרים:</h3>
+        <ul>
+          <li>מסמך SRS</li>
+          <li>מודלי תהליכים עסקיים</li>
+          <li>מילון מונחים</li>
+          <li>Use Case Documents</li>
         </ul>
       </section>
 
       <section id="design">
-        <h2>3. תכנון מערכת (System Design)</h2>
-        <p>
-          הגדרת ארכיטקטורת המערכת, מודולים, מסדי נתונים וממשקי API.
-          יוצרים UML diagrams, ERD לנתונים ותיעוד טכני מפורט.
-        </p>
-      </section>
-
-      <section id="development">
-        <h2>4. פיתוח ו‑Unit Testing</h2>
+        <h2>3. עיצוב (Design)</h2>
         <ul>
-          <li>כתיבת קוד על ידי מפתחים בשיטות Agile/Waterfall.</li>
-          <li>בדיקות יחידה (Unit Tests) לכיסוי פונקציות או מחלקות באמצעות JUnit, pytest ועוד.</li>
-          <li>ניתוח סטטי (Static Analysis) עם SonarQube לאיתור ריחות קוד.</li>
+          <li>עיצוב ארכיטקטוני: מבנה מערכת ורכיבים.</li>
+          <li>עיצוב מפורט: מחלקות, ממשקים ואלגוריתמים.</li>
+          <li>עיצוב בסיס נתונים: ERD וסקימות.</li>
+          <li>Wireframes ו‑Mockups ל‑UI.</li>
+          <li>Design Patterns ואבטחה.</li>
+        </ul>
+        <h3>תוצרים:</h3>
+        <ul>
+          <li>System Architecture Document</li>
+          <li>Technical Specifications</li>
+          <li>Class & Component Diagrams</li>
+          <li>Database Model</li>
         </ul>
       </section>
 
-      <section id="integration">
-        <h2>5. אינטגרציה (Integration Testing)</h2>
-        <p>
-          בדיקה של שילוב הרכיבים: תקשורת שירותים, חיבור UI ל־backend,
-          שיטות טעינת Big Bang, Top‑Down, Bottom‑Up.
-        </p>
-      </section>
-
-      <section id="system-testing">
-        <h2>6. בדיקת מערכת (System Testing)</h2>
+      <section id="implementation">
+        <h2>4. יישום (Implementation)</h2>
         <ul>
-          <li>בדיקות פונקציונליות קצה־לקצה.</li>
-          <li>בדיקות ביצועים (Performance) עם JMeter.</li>
-          <li>בדיקות אבטחה (Security) עם OWASP ZAP.</li>
+          <li>כתיבת קוד על פי מפרטים.</li>
+          <li>Code Reviews.</li>
+          <li>Unit Testing.</li>
+          <li>ניהול גרסאות (Git).</li>
+          <li>Refactoring.</li>
         </ul>
       </section>
 
-      <section id="acceptance">
-        <h2>7. בדיקת קבלה (Acceptance Testing)</h2>
-        <p>
-          בדיקות Alpha/Beta אצל משתמשי קצה לקבלת משוב חי לפני שחרור חופשי.
-        </p>
+      <section id="testing">
+        <h2>5. בדיקות ואינטגרציה (Testing & Integration)</h2>
+        <h3>סוגי בדיקות:</h3>
+        <ul>
+          <li>Unit, Integration, System, UAT, Performance, Security.</li>
+        </ul>
+        <h3>טכניקות:</h3>
+        <ul>
+          <li>Black-Box: BVA, Equivalence, Decision Tables.</li>
+          <li>White-Box: Statement, Branch, Path Coverage.</li>
+        </ul>
+        <h3>ניהול בדיקות:</h3>
+        <ul>
+          <li>Test Plan, Test Cases, Defect Management.</li>
+          <li>Continuous Integration, Regression Testing.</li>
+        </ul>
       </section>
 
       <section id="deployment">
-        <h2>8. פריסה (Deployment)</h2>
-        <p>
-          העברה לשלבי Production והרצת Smoke Tests לווידוא יציבות ראשונית.
-        </p>
+        <h2>6. פריסה (Deployment)</h2>
+        <ul>
+          <li>Deployment Plan.</li>
+          <li>CI/CD (Jenkins, GitLab CI/CD).</li>
+          <li>Docker & Kubernetes.</li>
+        </ul>
       </section>
 
       <section id="maintenance">
-        <h2>9. תחזוקה ותמיכה (Maintenance)</h2>
+        <h2>7. תחזוקה (Maintenance)</h2>
         <ul>
-          <li>טיפול בתקלות בסביבת הייצור (Bug Fixes).</li>
-          <li>הפצת עדכונים ושדרוגים (Enhancements).</li>
-          <li>שמירה על Regression Suite למניעת שבירת קוד קיים.</li>
+          <li>Corrective, Preventive, Adaptive, Perfective.</li>
+          <li>Monitoring (Nagios, Prometheus).</li>
+          <li>Defect & Change Management (Jira).</li>
         </ul>
+      </section>
+
+      <section id="models">
+        <h2>מתודולוגיות SDLC</h2>
+        <ul>
+          <li>Waterfall, V-Model, Spiral</li>
+          <li>Agile: Scrum, Kanban, XP</li>
+        </ul>
+      </section>
+
+      <section id="devops">
+        <h2>שילוב DevOps</h2>
+        <ul>
+          <li>Automation, CI/CD, IaC</li>
+          <li>Microservices, Containers</li>
+        </ul>
+      </section>
+
+      <section id="shiftleft">
+        <h2>פרקטיקות Shift-Left</h2>
+        <ul>
+          <li>BDD, TDD, QA early involvement</li>
+        </ul>
+      </section>
+
+      <section id="architectures">
+        <h2>ארכיטקטורות מודרניות</h2>
+        <ul>
+          <li>Microservices, Serverless, Event-Driven</li>
+        </ul>
+      </section>
+
+      <section id="templates">
+        <h2>תבניות לדוגמה</h2>
+        <div class="template">
+          <section id="test-case-template" class="content">
+            <h3>תבנית מקרה בדיקה (Test Case Template)</h3>
+            <p>
+              <strong>מזהה (ID):</strong> TC‑001<br>
+              <strong>כותרת (Title):</strong> התחברות עם פרטים תקינים<br>
+              <strong>קדימות (Priority):</strong> גבוהה<br>
+              <strong>תנאים מוקדמים (Preconditions):</strong> משתמש רשום במערכת<br>
+              <strong>פעולות (Steps):</strong><br>
+              1. פתח את דף ההתחברות<br>
+              2. הזן שם משתמש תקין<br>
+              3. הזן סיסמה תקינה<br>
+              4. לחץ על כפתור "התחבר"<br>
+              <strong>תוצאה צפויה (Expected Result):</strong> המשתמש מועבר לדף הבית עם הודעת "ברוכים הבאים"<br>
+              <strong>תנאים מיוחדים (Remarks):</strong> יש לבדוק בכל הדפדפנים הנתמכים
+            </p>
+                    <p></p>
+        </div>
+        <div class="template">
+            <h3>Bug Report Template</h3>
+            <p>
+              תבנית לדיווח באג כותרת: לא ניתן להתחבר לאחר איפוס סיסמה.<br>
+              חומרה: קריטי<br>
+              עדיפות: גבוהה<br>
+              סביבה: Chrome 112, גרסה 2.5.1<br>
+              צעדים לשחזור:<br>
+              1. בצע איפוס סיסמה דרך "שכחתי סיסמה"<br>
+              2. הגדר סיסמה חדשה<br>
+              3. נסה להתחבר עם הסיסמה החדשה<br>
+              תוצאה בפועל: מוצגת שגיאה "הסיסמה לא תקינה"<br>
+              תוצאה צפויה: התחברות מוצלחת למערכת<br>
+              קבצים מצורפים: screenshot_error.png, app_log.txt<br>
+              הערות נוספות: הבעיה מופיעה רק כאשר הסיסמה מכילה תווים מיוחדים
+            </p>
+          </section>
+          
+
+      <section id="summary">
+        <h2>סיכום</h2>
+        <p>SDLC מספק מסגרת מקיפה לכל היבטי פיתוח, בדיקות ותחזוקה, משלב הבנה עמוקה ופרקטיקות מודרניות להצלחה.</p>
       </section>
     </main>
   </div>
@@ -178,3 +301,4 @@
   </footer>
 </body>
 </html>
+

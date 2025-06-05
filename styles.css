@@ -491,3 +491,15 @@ header .back-home {
   text-align: right;
 }
 
+/* ביטול קיצוץ הטקסט בתבניות לדוגמה */
+
+.wave-separator {
+  line-height: 0;
+  margin-bottom: -1px; /* כדי לכסות את הבור בין רקעים */
+}
+.wave-separator svg {
+  display: block;
+  width: 100%;
+  height: 80px;
+}
+

@@ -3,75 +3,349 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>בדיקות API ו-Postman - ISTQB</title>
+  <title>בדיקות API ו-Postman – ISTQB</title>
   <link rel="stylesheet" href="styles.css">
   <style>
-    .content-section {
-      margin: 1rem auto;
-      max-width: 800px;
-      padding: 1rem;
-      background-color: #fff;
-      border-radius: 6px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      text-align: right;
-      direction: rtl;
+    .page-container {
+      display: flex;
+      max-width: 1200px;
+      margin: 2rem auto;
+      gap: 2rem;
+      padding: 0 1rem;
     }
-    .content-section h2 {
-      color: #0056b3;
+    .toc {
+      position: sticky;
+      align-self: flex-start;
+      top: 100px;
+      right: 2rem;
+      width: 260px;
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 1rem;
+      font-size: 0.9rem;
+      z-index: 10;
+    }
+    .toc h2 {
+      font-size: 1.2rem;
+      margin: 0 0 1rem;
       text-align: center;
     }
-    .content-section p,
-    .content-section ul {
-      font-size: 1.1rem;
+    .toc ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      max-height: calc(100vh - 140px);
+      overflow-y: auto;
+    }
+    .toc li + li {
+      margin-top: 0.5rem;
+    }
+    .toc a {
+      text-decoration: none;
+      color: #007BFF;
+      display: block;
+      padding: 0.25rem 0;
+    }
+    .toc a:hover {
+      text-decoration: underline;
+    }
+    .content {
+      flex: 1;
+    }
+    .content section {
+      margin-bottom: 2.5rem;
+    }
+    .content h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 0.3rem;
+    }
+    .content p,
+    .content ul,
+    .content ol {
+      margin: 0.75rem 0;
       line-height: 1.6;
-      color: #333;
     }
-    .content-section ul {
-      margin-right: 2rem;
-      list-style: disc;
+    .content ul,
+    .content ol {
+      padding-right: 1.5rem;
     }
-    .question-block {
-      background-color: #f9f9f9;
-      border: 1px solid #ddd;
+    pre {
+      background: #f4f4f4;
       padding: 1rem;
-      margin: 1rem 0;
-      border-radius: 5px;
+      border-radius: 4px;
+      overflow-x: auto;
+    }
+    code {
+      font-family: Consolas, monospace;
+      font-size: 0.95rem;
     }
   </style>
 </head>
 <body>
-<!-- api-postman.html -->
-<header>
-  <h1>בדיקות API ו-Postman</h1>
-  <nav>
-    <a href="index.html" class="back-home">עמוד הבית</a>
-  </nav>
-</header>
+  <header>
+    <h1>בדיקות API ו-Postman</h1>
+    <nav><a href="index.html" class="back-home">עמוד הבית</a></nav>
+  </header>
 
-  <main class="content-section">
-    <section class="introduction">
-      <h2>מבוא לבדיקות API</h2>
-      <p>
-        בדיקות API מתמקדות בבדיקת ממשקי ה‑HTTP/REST בין רכיבי המערכת, כולל שידור וקבלה של נתונים בפורמט JSON/XML.
-      </p>
-    </section>
-    <section class="basics">
-      <h2>Postman ככלי בדיקה</h2>
+  <div class="page-container">
+    <aside class="toc">
+      <h2>תוכן העניינים</h2>
       <ul>
-        <li>יצירת בקשות GET/POST/PUT/DELETE</li>
-        <li>הגדרת כותרות (Headers) ופרמטרים</li>
-        <li>ניתוח תגובות השרת ובדיקת סטטוס קוד</li>
-        <li>כתיבת סקריפטים ב‑JavaScript להצמדות ניסוי (Pre-request & Tests)</li>
+        <li><a href="#what-is-postman">1. מה זה Postman?</a></li>
+        <li><a href="#installation">2. התקנה ויצירת חשבון</a></li>
+        <li><a href="#interface">3. היכרות עם הממשק</a></li>
+        <li><a href="#first-request">4. יצירת קריאת API ראשונה</a></li>
+        <li><a href="#collections">5. ארגון קריאות באוספים</a></li>
+        <li><a href="#environments">6. סביבות ומשתנים</a></li>
+        <li><a href="#tests">7. כתיבת בדיקות אוטומטיות</a></li>
+        <li><a href="#pre-request">8. סקריפטים לפני שליחה</a></li>
+        <li><a href="#runner">9. הרצת אוספים (Runner)</a></li>
+        <li><a href="#newman">10. עבודה עם Newman</a></li>
+        <li><a href="#tips">טיפים נוספים</a></li>
+        <li><a href="#glossary">מילון מונחים</a></li>
+
       </ul>
-    </section>
-    <section class="practice">
-      <h2>תרגול ושאלות</h2>
-      <div class="question-block">
-        <p><strong>שאלה:</strong> כיצד תבדוק שבקשת GET מחזירה את השדות הנכונים?</p>
-        <p><strong>תשובה:</strong> ב‑Postman מוסיפים טסט JavaScript שבודק שה‑response JSON מכיל את המאפיינים הצפויים.</p>
-      </div>
-    </section>
-  </main>
+    </aside>
+
+    <main class="content">
+      <section id="what-is-postman">
+        <h2>1. מה זה Postman?</h2>
+        <p>Postman הוא כלי גרפי (GUI) לניהול, בדיקה והרצת קריאות HTTP/API. מאפשר לבנות, לשמור ולהריץ בקשות, לכתוב בדיקות אוטומטיות ולייצא דוחות.</p>
+      </section>
+
+      <section id="installation">
+        <h2>2. התקנה ויצירת חשבון</h2>
+        <ol>
+          <li>היכנסו ל־<a href="https://www.postman.com" target="_blank" rel="noopener">postman.com</a> והורידו את הגרסה המתאימה למערכת ההפעלה.</li>
+          <li>התקינו את התוכנה והתחברו או צרו חשבון חינמי.</li>
+        </ol>
+      </section>
+
+      <section id="interface">
+        <h2>3. היכרות עם הממשק</h2>
+        <ul>
+          <li><strong>סרגל צד (Sidebar):</strong> כאן תמצאו את האוספים שלכם (Collections), הגדרות סביבות (Environments) והיסטוריית הקריאות (History).</li>
+          <li><strong>החלונית הראשית (Main Panel):</strong> באזור הזה בונים את הבקשה (URL, Method, Headers, Body) ומקבלים את התשובה מהשרת.</li>
+          <li><strong>קונסול (Console):</strong> מציג לוגים של הקריאות, תוצאות בדיקות (Tests), ושגיאות בסקריפטים.</li>
+        </ul>
+      </section>      
+
+      <section id="first-request">
+        <h2>4. יצירת קריאת API ראשונה</h2>
+        <ol>
+          <li>בחרו את <code>HTTP Method</code> (GET, POST, PUT, DELETE וכו’).</li>
+          <li>הזינו את כתובת ה־<code>URL</code> של ה־API.</li>
+          <li>הוסיפו פרמטרים ב־<code>Params</code> ושדות כותרת ב־<code>Headers</code> לפי הצורך.</li>
+          <li>בלשונית <strong>Body</strong> בחרו <code>raw → JSON</code> וכתבו את ה־payload.</li>
+          <li>לחצו על הכפתור <code>Send</code> כדי לשלוח את הבקשה ולהציג את התגובה.</li>
+        </ol>
+      </section>      
+
+      <section id="collections">
+        <h2>5. ארגון קריאות באוספים (Collections)</h2>
+        <p>לאחר שכל קריאה עובדת, לחצו <strong>Save</strong> כדי לשמור אותה בתוך Collection חדש או קיים, ולארגן בתיקיות לפי נושאים.</p>
+      </section>
+
+      <section id="environments">
+        <h2>6. סביבות עבודה ומשתנים (Environments &amp; Variables)</h2>
+        <p>
+          סביבות עבודה מאפשרות לאחסן קבוצות של משתנים (למשל <code>base_url</code>, <code>auth_token</code>) ולעבור בין
+          DEV, QA ו‑Prod בלחיצה אחת, בלי לערוך כל קריאה מחדש.
+        </p>
+        <ol>
+          <li>
+            <strong>יצירת סביבה חדשה:</strong><br>
+            בתפריט העליון של Postman בחרו <code>Environments → Add</code> ומלאו שם לסביבה (למשל <code>DEV</code> או <code>QA</code>).
+          </li>
+          <li>
+            <strong>הגדרת משתנים:</strong><br>
+            הוסיפו משתנים כגון <code>base_url</code> ו‑<code>auth_token</code> עם הערכים המתאימים לכל סביבה.
+          </li>
+          <li>
+            <strong>שימוש במשתנים בקריאות:</strong><br>
+            בשדה ה‑URL כתבו <code>{{base_url}}/users</code> במקום כתובת קבועה — כך ה‑host ישתנה בהתאם לסביבה שבחרתם.
+          </li>
+        </ol>
+      </section>      
+
+      <section id="tests">
+        <h2>7. כתיבת בדיקות אוטומטיות (Tests)</h2>
+        <p>
+          בלשונית <strong>Tests</strong> (מתחת ל‑Body) מוסיפים סקריפטים ב‑JavaScript כדי לוודא שהתגובה תואמת
+          לציפיותיכם באופן אוטומטי. הנה תבנית פשוטה:
+        </p>
+        <pre><code>pm.test("קוד סטטוס 200", () => {
+          pm.response.to.have.status(200);
+      });
+      
+      pm.test("מכיל תכונה userId", () => {
+          const json = pm.response.json();
+          pm.expect(json).to.have.property("userId");
+      });</code></pre>
+        <p>
+          לאחר לחיצה על <strong>Send</strong>, עברו ללשונית <strong>Test Results</strong> כדי לראות את תוצאות הבדיקות—
+          אילו עברו ואילו נכשלו.
+        </p>
+      </section>        
+
+      <section id="pre-request">
+        <h2>8. סקריפטים לפני שליחה (Pre-request Script)</h2>
+        <p>
+          בלשונית <strong>Pre-request Script</strong> ניתן להריץ JavaScript לפני שליחת הבקשה, כדי:
+        </p>
+        <ul>
+          <li>להגדיר ערכים דינמיים (כמו חותמת זמן, טוקן וכו').</li>
+          <li>לאתחל משתנים בסביבה (Environment).</li>
+          <li>להריץ קוד הכנה אחר לפי צורך.</li>
+        </ul>
+        <p>דוגמה: הגדרת חותמת זמן נוכחית כמשתנה סביבה <code>timestamp</code>:</p>
+        <pre><code>pm.environment.set("timestamp", new Date().toISOString());</code></pre>
+        <p>כעת אפשר להשתמש ב־<code>{{timestamp}}</code> בכל מקום בבקשה, למשל ב‑Body:</p>
+        <pre><code>{
+        "eventTime": "{{timestamp}}",
+        "userId": 123
+      }</code></pre>
+        <p>
+          הגדרה כזו מבטיחה שכל קריאה תכיל ערך עדכני, תוך שמירה על גמישות ובקרת גרסאות בין הסביבות השונות (DEV/QA/Prod).
+        </p>
+      </section>
+      
+      <section id="runner">
+        <h2>9. הרצת אוספים (Collection Runner)</h2>
+        <p>
+          המשתמש ב‑<strong>Collection Runner</strong> מאפשר להפעיל סדרה של קריאות API במקביל, עם ניהול איטרציות, קבצי קלט (CSV/JSON) ותצוגת דוח מסכם.
+        </p>
+        <ol>
+          <li>
+            בחלק העליון של ממשק Postman לחצו על הכפתור <strong>Runner</strong>.
+            <br><em>(או בחרו “Run” מתוך אוסף מסויים בתפריט Collections)</em>.
+          </li>
+          <li>
+            בחרו את ה‑<strong>Collection</strong> הרצוי מתוך הרשימה.
+          </li>
+          <li>
+            בחרו את ה‑<strong>Environment</strong> הרצוי (למשל DEV, QA או Prod).
+          </li>
+          <li>
+            אם רוצים להריץ עם משתנים דינמיים:
+            <ul>
+              <li>לחצו <strong>Select File</strong> ובחרו קובץ CSV/JSON המכיל שורות של משתנים.</li>
+              <li>וודאו ששמות העמודות תואמות לשמות המשתנים (למשל <code>userId</code>, <code>timestamp</code>).</li>
+            </ul>
+          </li>
+          <li>
+            הגדירו את מספר ה‑<strong>Iterations</strong> (כמה פעמים תרוץ האוסף; יוכל להיות שווה למספר השורות בקובץ).
+          </li>
+          <li>
+            לחצו <strong>Start Run</strong> כדי להתחיל.
+          </li>
+        </ol>
+        <p>
+          בסיום הריצה תוצג תצוגה מקדימה של התוצאות (Passed/Failed לכל קריאה), וכן דוח שניתן לייצא כ־JSON או JUnit לצרכי CI/CD.
+        </p>
+        <pre><code>// דוגמה לשורת JSON מתוך קובץ test-data.json:
+      {
+        "userId": 101,
+        "timestamp": "2025-04-21T12:34:56.789Z"
+      }
+        </code></pre>
+        <p>
+          טיפים:
+          <ul>
+            <li>חלקו את ה־Collection ל־Folders לפי מודולים (Login, Orders, Reports).</li>
+            <li>השתמשו ב־<strong>Delay</strong> בין איטרציות אם ה־API מוגבל בשיעור קריאות.</li>
+            <li>בדקו בדוח האם יש קריאות שחוזרות על עצמן ונכשלות כדי לגלות דפוסי בעיות.</li>
+          </ul>
+        </p>
+      </section>      
+
+      <section id="newman">
+        <h2>10. עבודה עם Newman (CLI)</h2>
+        <hr>
+        <p>
+          Newman הוא כלי שורת פקודה להרצת אוספים מ‑Postman מחוץ לממשק הגרפי.
+          שימושי להרצת בדיקות אוטומטית או לשילוב ב־CI (כמו Jenkins).
+        </p>
+        <ol>
+          <li>
+            התקנה גלובלית:  
+            <br><code>npm install -g newman</code>
+          </li>
+          <li>
+            ייצוא מהגרפי (JSON):  
+            <ul>
+              <li>Collections → Export → (Collection v2.1 JSON)</li>
+              <li>Environments → Manage Environments → Export</li>
+            </ul>
+          </li>
+          <li>
+            הרצת האוסף הבסיסית:  
+            <br><code>newman run MyCollection.json -e MyEnvironment.json</code>
+          </li>
+        </ol>
+        <p>
+          בסיום, תוצאות הבדיקה יופיעו במסוף.  
+          אם תרצו דוח HTML פשוט, הוסיפו:<br>
+          <code>--reporters cli,html --reporter-html-export report.html</code>
+        </p>
+        <pre><code>
+      newman run MyCollection.json \
+        -e MyEnvironment.json \
+        --reporters cli,html \
+        --reporter-html-export report.html
+        </code></pre>
+      </section>      
+
+      <section id="tips">
+        <h2>טיפים נוספים</h2>
+        <ul>
+          <li><strong>לארגן בתיקיות (Folders):</strong> במקום לשמור כל ה‑Request ברשימה ארוכה, צרו היררכיה של תיקיות לפי מודולים או תרחישי בדיקה.</li>
+          <li><strong>להשתמש בתגיות (Tags):</strong> תייגו כל בקשה במילות מפתח כדי לאתר אותה במהירות בעזרת חיפוש פנימי.</li>
+          <li><strong>להגדיר מניטורים (Monitors):</strong> קבעו הרצות אוטומטיות של אוספים בזמנים קבועים (יומי/שבועי) וודאו שלא נגררות בעיות נסתרות.</li>
+          <li><strong>לנצל את Postman Interceptor:</strong> לכידת כל ה‑HTTP/HTTPS שנשלח מהדפדפן תאפשר שחזור מדויק של קריאות מורכבות.</li>
+          <li><strong>להשתמש ב‑Snippets של Tests:</strong> במקום לכתוב סקריפטים מאפס, נסו קטעי קוד מוכנים (Status code, JSON schema וכו׳) שבתפריט ה‑Tests.</li>
+          <li><strong>לייצא דוחות ומדדים:</strong> באמצעות Reports ב‑Collection Runner או Newman, שלחו תוצאות אוטומטית למייל או לאינטגרציית CI כמו Jenkins.</li>
+        </ul>
+      </section>
+      
+      <section id="glossary">
+        <h2>מילון מונחים</h2>
+        <dl>
+          <dt>API</dt>
+          <dd>קיצור של Application Programming Interface – ממשק לתקשורת בין תוכנות דרך קריאות HTTP.</dd>
+          <dt>HTTP Method</dt>
+          <dd>שיטות קריאה בפרוטוקול HTTP כגון GET, POST, PUT, DELETE, כל אחת מתאימה לפעולה שונה על המשאב.</dd>
+          <dt>URL</dt>
+          <dd>כתובת המשאב שאליו מכוונת קריאת ה‑API.</dd>
+          <dt>Params</dt>
+          <dd>פרמטרים הנשלחים ב‑query string בכתובת ה‑URL כדי לסנן או למיין נתונים.</dd>
+          <dt>Headers</dt>
+          <dd>כותרות המלוות את הבקשה או התשובה, למשל Content-Type או Authorization.</dd>
+          <dt>Body</dt>
+          <dd>גוף הבקשה (בקריאות POST/PUT) שמכיל נתונים בפורמט JSON, XML או אחר.</dd>
+          <dt>Collection</dt>
+          <dd>אוסף של קריאות API המאורגן בתיקיות לניהול נוח ושיתוף.</dd>
+          <dt>Environment</dt>
+          <dd>קבוצת משתנים (כמו base_url) שניתן להחליף בין סביבות (DEV/QA/Prod) בקליק.</dd>
+          <dt>Runner</dt>
+          <dd>כלי ל־Postman להגדרת הרצות אוטומטיות של אוספים עם איטרציות וקובצי קלט.</dd>
+          <dt>Newman</dt>
+          <dd>כלי שורת פקודה להרצת אוספים מחוץ לממשק הגרפי, מותאם לאינטגרציית CI/CID.</dd>
+          <dt>Monitor</dt>
+          <dd>אפשרות ב‑Postman להריץ אוספים בזמנים קבועים ולשלוח דוחות אוטומטיים.</dd>
+          <dt>Interceptor</dt>
+          <dd>תוסף לדפדפן שמאפשר לכידת קריאות HTTP ישירות ל‑Postman לצורך ניתוח ושחזור.</dd>
+          <dt>Test Snippets</dt>
+          <dd>קטעי קוד מוכנים בלשונית Tests, לדוגמה בדיקת קוד סטטוס או מבנה JSON.</dd>
+        </dl>
+      </section>
+
+    </main>
+  </div>
+
   <footer>
     <p>© 2025 | נבנה באהבה עבור בודקי התוכנה העתידיים</p>
   </footer>

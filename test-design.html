@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>שיעור 3: טכניקות לעיצוב בדיקות (הפרקטיקה)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>שיעור 3: טכניקות לעיצוב בדיקות</h1>
+    <nav>
+      <a href="index.html" class="back-home">חזרה לסילבוס</a>
+    </nav>
+  </header>
+
+  <div class="page-container">
+    <aside class="toc">
+        <h2>תוכן השיעור</h2>
+        <ul>
+            <li><a href="#why-design">למה צריך "לעצב" בדיקות?</a></li>
+            <li><a href="#ep-technique">טכניקה 1: מחלקות שקילות (EP)</a></li>
+            <li><a href="#bva-technique">טכניקה 2: ערכי קצה (BVA)</a></li>
+            <li><a href="#workshop">🧠 סדנה: בדיקת שדה סיסמה</a></li>
+            <li><a href="#decision-table">טכניקה 3: טבלת החלטה</a></li>
+        </ul>
+    </aside>
+
+    <main class="content">
+      <section id="why-design">
+        <h2>למה צריך "לעצב" בדיקות?</h2>
+        <p>
+          האתגר הכי גדול של בודק הוא: <strong>יש אינסוף אפשרויות בדיקה, אבל זמן מוגבל.</strong>
+          אנחנו לא יכולים לבדוק כל מספר, כל אות וכל לחיצה.
+        </p>
+        <p>טכניקות העיצוב (Test Design Techniques) הן שיטות מתמטיות שעוזרות לנו לבחור את המינימום בדיקות שייתנו מקסימום כיסוי.</p>
+      </section>
+
+      <section id="ep-technique">
+        <h2>טכניקה 1: חלוקה למחלקות שקילות (Equivalence Partitioning - EP)</h2>
+        <p><strong>הרעיון:</strong> אם יש קבוצה של נתונים שהמערכת אמורה להתייחס אליהם אותו דבר, מספיק לבדוק נציג אחד מהקבוצה.</p>
+        
+        <div style="background:#e0f7fa; padding:15px; border-radius:8px;">
+            <h3>דוגמה: שדה "גיל" לכרטיס קולנוע (מותר: 18 עד 120)</h3>
+            <p>במקום לבדוק את גיל 18, 19, 20, 21... נחלק לקבוצות:</p>
+            <ul>
+                <li><strong>קבוצה תקינה (Valid):</strong> גילאים 18-120. <br>נבחר נציג שרירותי: <strong>35</strong>.</li>
+                <li><strong>קבוצה לא תקינה 1 (Invalid Low):</strong> מתחת ל-18. <br>נבחר נציג: <strong>5</strong>.</li>
+                <li><strong>קבוצה לא תקינה 2 (Invalid High):</strong> מעל 120. <br>נבחר נציג: <strong>150</strong>.</li>
+            </ul>
+            <p><strong>סה"כ בדיקות: 3 (במקום 100+).</strong></p>
+        </div>
+      </section>
+
+      <section id="bva-technique">
+        <h2>טכניקה 2: ניתוח ערכי קצה (Boundary Value Analysis - BVA)</h2>
+        <p><strong>הרעיון:</strong> היסטורית, רוב הבאגים קורים ב"קצוות" של התנאים (בגלל שהמתכנת כתב <code>></code> במקום <code>>=</code>).</p>
+        <p>אנחנו תמיד נבדוק את הגבול, ואת המספרים שליד הגבול.</p>
+        
+        <div style="background:#fff3e0; padding:15px; border-radius:8px;">
+            <h3>המשך דוגמה: שדה גיל (18 עד 120)</h3>
+            <p>הגבולות שלנו הם 18 ו-120. נבדוק:</p>
+            <ul>
+                <li><strong>17</strong> (גבול תחתון מינוס 1) -> מצפים לשגיאה ❌</li>
+                <li><strong>18</strong> (גבול תחתון) -> מצפים להצלחה ✅</li>
+                <li><strong>120</strong> (גבול עליון) -> מצפים להצלחה ✅</li>
+                <li><strong>121</strong> (גבול עליון פלוס 1) -> מצפים לשגיאה ❌</li>
+            </ul>
+        </div>
+      </section>
+
+      <section id="workshop">
+        <h2>🧠 סדנה מעשית: בדיקת שדה סיסמה</h2>
+        <p><strong>הדרישה:</strong> שדה סיסמה חייב להכיל בין 6 ל-10 תווים (כולל).</p>
+        <p>בואו נתכנן את הבדיקות יחד לפי BVA (ערכי קצה):</p>
+        
+        <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+            <thead>
+                <tr style="background: #333; color: white;">
+                    <th>הערך לבדיקה (מס' תווים)</th>
+                    <th>סוג הבדיקה</th>
+                    <th>תוצאה צפויה</th>
+                    <th>הסבר</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>5 תווים</td>
+                    <td>שלילי (Invalid)</td>
+                    <td>שגיאה</td>
+                    <td>קצת מתחת למינימום</td>
+                </tr>
+                <tr style="background: #e8f5e9;">
+                    <td>6 תווים</td>
+                    <td>חיובי (Valid)</td>
+                    <td>הצלחה</td>
+                    <td>בדיוק המינימום (נקודת תורפה!)</td>
+                </tr>
+                <tr style="background: #e8f5e9;">
+                    <td>10 תווים</td>
+                    <td>חיובי (Valid)</td>
+                    <td>הצלחה</td>
+                    <td>בדיוק המקסימום</td>
+                </tr>
+                <tr>
+                    <td>11 תווים</td>
+                    <td>שלילי (Invalid)</td>
+                    <td>שגיאה</td>
+                    <td>קצת מעל המקסימום</td>
+                </tr>
+            </tbody>
+        </table>
+      </section>
+
+      <section id="decision-table">
+        <h2>טכניקה 3: טבלת החלטה (Decision Table)</h2>
+        <p>משתמשים בזה כשיש לוגיקה עסקית מורכבת עם כמה תנאים ("אם" ו-"אז").</p>
+        <p><strong>דוגמה: הנחה בחנות.</strong></p>
+        <ul>
+            <li>תנאי 1: לקוח חדש?</li>
+            <li>תנאי 2: קנה מעל 200 ש"ח?</li>
+            <li>תוצאה: מקבל 10% הנחה רק אם <strong>שניהם</strong> נכונים.</li>
+        </ul>
+        <table style="width:100%; text-align:center; border:1px solid #ccc; margin-top:10px;">
+            <tr style="background:#eee;">
+                <th>בדיקה</th>
+                <th>לקוח חדש?</th>
+                <th>מעל 200 ש"ח?</th>
+                <th>תוצאה (הנחה?)</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>כן (T)</td>
+                <td>כן (T)</td>
+                <td><strong>כן ✅</strong></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>כן (T)</td>
+                <td>לא (F)</td>
+                <td>לא ❌</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>לא (F)</td>
+                <td>כן (T)</td>
+                <td>לא ❌</td>
+            </tr>
+             <tr>
+                <td>4</td>
+                <td>לא (F)</td>
+                <td>לא (F)</td>
+                <td>לא ❌</td>
+            </tr>
+        </table>
+        <p>ככה אנחנו מוודאים שלא פספסנו אף קומבינציה!</p>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    <p>© 2025 | קורס בדיקות תוכנה מעשי</p>
+  </footer>
+</body>
+</html>

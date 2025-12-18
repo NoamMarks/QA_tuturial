@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SQL ושימוש בנתונים לבודקים</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>SQL ושימוש בנתונים: ארגז הכלים של הבודק</h1>
+    <nav><a href="index.html" class="back-home">חזרה לסילבוס</a></nav>
+  </header>
+
+  <div class="page-container">
+    <aside class="toc">
+      <h2>תוכן השיעור</h2>
+      <ul>
+        <li><a href="#why-sql">למה בודק צריך SQL?</a></li>
+        <li><a href="#basic-queries">שאילתות בסיסיות (SELECT)</a></li>
+        <li><a href="#filtering">סינון נתונים (WHERE)</a></li>
+        <li><a href="#joining">הצלבת נתונים (JOIN)</a></li>
+        <li><a href="#cheat-sheet">שליף (Cheat Sheet) לשימוש יומיומי</a></li>
+      </ul>
+    </aside>
+
+    <main class="content">
+      <section id="why-sql">
+        <h2>למה בודק צריך SQL?</h2>
+        <p>האתר (UI) יכול לשקר. הדאטה-בייס (DB) הוא האמת היחידה. <br>
+        בודק ללא ידע ב-SQL הוא כמו רופא שמסתכל רק על החולה מבחוץ ולא עושה בדיקות דם. אנחנו צריכים להסתכל פנימה.</p>
+        <p><strong>שימושים נפוצים ביום-יום:</strong></p>
+        <ul>
+            <li>לוודא שהמשתמש שנרשם באמת נוצר בטבלה.</li>
+            <li>למצוא נתונים לבדיקה (למשל: "תביא לי משתמש שיש לו הזמנה פתוחה כדי שאוכל לבדוק עליו").</li>
+            <li>לבדוק לוגים של שגיאות.</li>
+        </ul>
+      </section>
+
+      <section id="basic-queries">
+        <h2>1. השאילתה הראשונה שלך (SELECT)</h2>
+        <p>כדי לשלוף נתונים, נשתמש בפקודה <code>SELECT</code>. הסימן <code>*</code> אומר "תביא את כל העמודות".</p>
+        <div style="background:#282c34; color:#abb2bf; padding:15px; border-radius:5px; direction:ltr; text-align:left;">
+            <code style="color:#c678dd;">SELECT</code> * <code style="color:#c678dd;">FROM</code> Users;
+        </div>
+        <p>תרגום: "תביא הכל מטבלת המשתמשים".</p>
+      </section>
+
+      <section id="filtering">
+        <h2>2. סינון נתונים (WHERE) - הכי חשוב!</h2>
+        <p>אנחנו כמעט אף פעם לא רוצים את <em>כל</em> המשתמשים. אנחנו רוצים מישהו ספציפי.</p>
+        
+        <h3>דוגמה 1: מציאת משתמש לפי מייל</h3>
+        <div style="background:#282c34; color:#abb2bf; padding:15px; border-radius:5px; direction:ltr; text-align:left;">
+            <code style="color:#c678dd;">SELECT</code> * <code style="color:#c678dd;">FROM</code> Users <br>
+            <code style="color:#c678dd;">WHERE</code> email = <span style="color:#98c379;">'test@gmail.com'</span>;
+        </div>
+
+        <h3>דוגמה 2: מציאת הזמנות יקרות (מעל 500 ש"ח)</h3>
+        <div style="background:#282c34; color:#abb2bf; padding:15px; border-radius:5px; direction:ltr; text-align:left;">
+            <code style="color:#c678dd;">SELECT</code> * <code style="color:#c678dd;">FROM</code> Orders <br>
+            <code style="color:#c678dd;">WHERE</code> total_price > 500;
+        </div>
+      </section>
+
+      <section id="joining">
+        <h2>3. הצלבת נתונים (JOIN)</h2>
+        <p>לפעמים המידע מפוצל. שם המשתמש נמצא בטבלת <code>Users</code>, אבל ההזמנה שלו בטבלת <code>Orders</code>. איך מחברים?</p>
+        <div style="background:#282c34; color:#abb2bf; padding:15px; border-radius:5px; direction:ltr; text-align:left;">
+            <code style="color:#c678dd;">SELECT</code> Users.name, Orders.order_date <br>
+            <code style="color:#c678dd;">FROM</code> Users <br>
+            <code style="color:#c678dd;">INNER JOIN</code> Orders <code style="color:#c678dd;">ON</code> Users.id = Orders.user_id <br>
+            <code style="color:#c678dd;">WHERE</code> Users.name = <span style="color:#98c379;">'David'</span>;
+        </div>
+        <p>זה נראה מפחיד, אבל זה פשוט אומר: "חבר את הטבלאות איפה שמספר הזהות של המשתמש תואם".</p>
+      </section>
+
+      <section id="cheat-sheet">
+        <h2>📄 שליף (Cheat Sheet) לשימוש יומיומי</h2>
+        <p>שמרו את הטבלה הזו, היא תעזור לכם ב-90% מהמקרים:</p>
+        <table style="width:100%; border-collapse:collapse; margin-top:10px;">
+            <tr style="background:#333; color:white;">
+                <th style="padding:10px;">מילת מפתח</th>
+                <th style="padding:10px;">מה היא עושה?</th>
+            </tr>
+            <tr style="border-bottom:1px solid #ccc;">
+                <td style="padding:10px; font-weight:bold;">SELECT</td>
+                <td style="padding:10px;">אומרת איזה עמודות להציג (או * להכל).</td>
+            </tr>
+            <tr style="border-bottom:1px solid #ccc;">
+                <td style="padding:10px; font-weight:bold;">FROM</td>
+                <td style="padding:10px;">מאיזו טבלה לקחת את המידע.</td>
+            </tr>
+            <tr style="border-bottom:1px solid #ccc;">
+                <td style="padding:10px; font-weight:bold;">WHERE</td>
+                <td style="padding:10px;">תנאי לסינון (כמו "If").</td>
+            </tr>
+            <tr style="border-bottom:1px solid #ccc;">
+                <td style="padding:10px; font-weight:bold;">ORDER BY</td>
+                <td style="padding:10px;">מיון התוצאות (למשל מהחדש לישן).</td>
+            </tr>
+            <tr style="border-bottom:1px solid #ccc;">
+                <td style="padding:10px; font-weight:bold;">LIMIT / TOP</td>
+                <td style="padding:10px;">להביא רק את ה-10 הראשונים.</td>
+            </tr>
+        </table>
+      </section>
+    </main>
+  </div>
+  <footer>
+    <p>© 2025 | קורס בדיקות תוכנה מעשי</p>
+  </footer>
+</body>
+</html>

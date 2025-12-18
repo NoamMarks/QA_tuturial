@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>בדיקות API ו-Postman – ISTQB</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>בדיקות API ו-Postman</h1>
+    <nav><a href="index.html" class="back-home">עמוד הבית</a></nav>
+  </header>
+
+  <div class="page-container">
+    <aside class="toc">
+      <h2>תוכן העניינים</h2>
+      <ul>
+        <li><a href="#what-is-postman">1. מה זה Postman?</a></li>
+        <li><a href="#installation">2. התקנה ויצירת חשבון</a></li>
+        <li><a href="#interface">3. היכרות עם הממשק</a></li>
+        <li><a href="#first-request">4. יצירת קריאת API ראשונה</a></li>
+        <li><a href="#collections">5. ארגון קריאות באוספים</a></li>
+        <li><a href="#environments">6. סביבות ומשתנים</a></li>
+        <li><a href="#tests">7. כתיבת בדיקות אוטומטיות</a></li>
+        <li><a href="#pre-request">8. סקריפטים לפני שליחה</a></li>
+        <li><a href="#runner">9. הרצת אוספים (Runner)</a></li>
+        <li><a href="#newman">10. עבודה עם Newman</a></li>
+        <li><a href="#glossary">מילון מונחים</a></li>
+      </ul>
+    </aside>
+
+    <main class="content">
+      <section id="what-is-postman">
+        <h2>1. מה זה Postman ואיך מבינים API?</h2>
+        
+        <div style="background-color: #e3f2fd; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-right: 5px solid #2196F3;">
+            <h3 style="margin-top:0; color: #0d47a1;">💡 הסבר פשוט: אנלוגיית המלצר</h3>
+            <p>הרבה מתחילים מסתבכים עם המושג API. תחשבו על זה כמו במסעדה:</p>
+            <ul>
+              <li><strong>הלקוח (Client):</strong> זה אתם (או האפליקציה). אתם יושבים בשולחן ורוצים מידע (אוכל).</li>
+              <li><strong>המטבח (Server/Database):</strong> שם נמצאים כל הנתונים וחומרי הגלם. אתם לא יכולים להיכנס למטבח ולקחת לבד.</li>
+              <li><strong>המלצר (API):</strong> הוא המתווך! אתם נותנים לו בקשה (Request), הוא הולך למטבח, וחוזר אליכם עם התשובה (Response).</li>
+            </ul>
+            <p><strong>Postman</strong> הוא הכלי שמאפשר לנו "לדבר עם המלצר" ישירות, לבדוק אם הוא מביא את המנה הנכונה, ואם הוא מחזיר תשובה מהר.</p>
+        </div>
+
+        <p>מבחינה טכנית, Postman הוא כלי גרפי (GUI) לניהול, בדיקה והרצת קריאות HTTP. הוא מאפשר לנו לוודא שהצד האחורי (Backend) של המערכת עובד תקין עוד לפני שיש לנו ממשק משתמש מוכן.</p>
+      </section>
+
+      <section id="installation">
+        <h2>2. התקנה ויצירת חשבון</h2>
+        <ol>
+          <li>היכנסו ל־<a href="https://www.postman.com" target="_blank" rel="noopener">postman.com</a> והורידו את הגרסה המתאימה למערכת ההפעלה.</li>
+          <li>התקינו את התוכנה. מומלץ ליצור חשבון חינמי כדי שהבדיקות שלכם ישמרו בענן.</li>
+        </ol>
+      </section>
+
+      <section id="interface">
+        <h2>3. היכרות עם הממשק</h2>
+        <ul>
+          <li><strong>סרגל צד (Sidebar):</strong> "התיקיות שלי". כאן תמצאו את האוספים (Collections) והיסטוריית הקריאות.</li>
+          <li><strong>החלונית הראשית (Main Panel):</strong> אזור העבודה. כאן בונים את הבקשה (כתובת ה-URL, סוג הבקשה) ורואים את התשובה.</li>
+          <li><strong>קונסול (Console):</strong> נמצא למטה בצד שמאל. מציג לוגים טכניים של מה שקרה "מאחורי הקלעים".</li>
+        </ul>
+      </section>      
+
+      <section id="first-request">
+        <h2>4. יצירת קריאת API ראשונה</h2>
+        <ol>
+          <li>בחרו את <code>HTTP Method</code> (למשל <strong>GET</strong> כדי לקבל מידע, <strong>POST</strong> כדי ליצור משהו חדש).</li>
+          <li>הזינו את כתובת ה־<code>URL</code> של ה־API (למשל: <code>https://reqres.in/api/users</code>).</li>
+          <li>לחצו על הכפתור <strong>Send</strong>.</li>
+          <li>למטה בחלק של ה-Response, תראו את התשובה שחזרה מהשרת (לרוב בפורמט JSON) ואת קוד הסטטוס (למשל 200 OK).</li>
+        </ol>
+      </section>      
+
+      <section id="collections">
+        <h2>5. ארגון קריאות באוספים (Collections)</h2>
+        <p>כדי לא לאבד את הבדיקות שלכם, שמרו אותן בתוך <strong>Collection</strong>. זה כמו תיקייה ראשית לפרויקט. מומלץ ליצור תיקיות משנה לפי נושאים (למשל: "ניהול משתמשים", "הזמנות", "התחברות").</p>
+      </section>
+
+      <section id="environments">
+        <h2>6. סביבות עבודה (Environments)</h2>
+        <p>
+          בעולם האמיתי, יש לנו כמה סביבות: פיתוח (Dev), בדיקות (QA) וייצור (Prod). הכתובות שונות בכל סביבה.
+        </p>
+        <p>במקום לשנות את הכתובת ידנית כל פעם:</p>
+        <ol>
+            <li>צרו <strong>Environment</strong> חדש (למשל "QA Env").</li>
+            <li>הגדירו משתנה בשם <code>base_url</code> עם הכתובת של סביבת הבדיקות.</li>
+            <li>בבקשה עצמה, כתבו <code>{{base_url}}/users</code>. כעת תוכלו להחליף סביבה בקליק אחד למעלה בצד ימין.</li>
+        </ol>
+      </section>      
+
+      <section id="tests">
+        <h2>7. כתיבת בדיקות אוטומטיות (Tests)</h2>
+        <p>
+          זה הכוח האמיתי של Postman. בלשונית <strong>Tests</strong> אפשר לכתוב קוד קטן שיבדוק את התשובה בשבילכם.
+        </p>
+        <pre><code>// בדיקה שהשרת החזיר תשובה תקינה (200)
+pm.test("Status code is 200", function () {
+    pm.response.to.have.status(200);
+});
+
+// בדיקה שהתגובה מהירה (פחות מ-200 מילי-שניות)
+pm.test("Response time is less than 200ms", function () {
+    pm.expect(pm.response.responseTime).to.be.below(200);
+});</code></pre>
+      </section>        
+
+      <section id="pre-request">
+        <h2>8. סקריפטים לפני שליחה (Pre-request Script)</h2>
+        <p>
+          כאן כותבים קוד שרץ <em>לפני</em> שהבקשה נשלחת. שימושי מאוד ליצירת תאריכים עדכניים או מספרים רנדומליים.
+        </p>
+        <pre><code>// יצירת תאריך של היום ושמירה למשתנה
+pm.environment.set("timestamp", new Date().toISOString());</code></pre>
+      </section>
+      
+      <section id="runner">
+        <h2>9. הרצת אוספים (Collection Runner)</h2>
+        <p>
+          רוצים להריץ 50 בדיקות ברצף? אל תעשו את זה ידנית. השתמשו ב-<strong>Runner</strong>. הוא יריץ את כל התיקייה, יבדוק את כל ה-Tests שכתבתם, ויפיק דוח ירוק/אדום בסוף.
+        </p>
+      </section>      
+
+      <section id="newman">
+        <h2>10. עבודה עם Newman</h2>
+        <p>
+          Newman הוא הכלי שמאפשר להריץ את הטסטים של Postman דרך שורת הפקודה (CMD). זה קריטי לשילוב בתוך מערכות אוטומציה (CI/CD) כמו Jenkins או Azure DevOps.
+        </p>
+        <pre><code>newman run MyCollection.json -e MyEnv.json</code></pre>
+      </section>      
+      
+      <section id="glossary">
+        <h2>מילון מונחים</h2>
+        <dl>
+          <dt>API</dt>
+          <dd>ממשק שמאפשר לתוכנות לדבר אחת עם השנייה.</dd>
+          <dt>JSON</dt>
+          <dd>השפה הנפוצה ביותר לתקשורת ב-API. נראה כמו רשימה של מפתח:ערך.</dd>
+          <dt>Status Code</dt>
+          <dd>המספר שהשרת מחזיר. 200=הצלחה, 400=טעות שלכם, 500=טעות של השרת.</dd>
+          <dt>Collection</dt>
+          <dd>אוסף של קריאות API, שקול ל"פרויקט בדיקות".</dd>
+        </dl>
+      </section>
+
+    </main>
+  </div>
+
+  <footer>
+    <p>© 2025 | נבנה באהבה עבור בודקי התוכנה העתידיים</p>
+  </footer>
+</body>
+</html>

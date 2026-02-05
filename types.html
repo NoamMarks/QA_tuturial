@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>סוגי בדיקות תוכנה - ISTQB</title>
+  <title>סוגי בדיקות תוכנה - המדריך המלא</title>
   <link rel="stylesheet" href="styles.css">
   <style>
     .content-section {
@@ -19,71 +19,197 @@
     .content-section h2 {
       color: #0056b3;
       text-align: center;
+      margin-top: 2rem;
+      border-bottom: 2px solid #f0f0f0;
+      padding-bottom: 10px;
+    }
+    .content-section h3 {
+      color: #2c3e50;
+      margin-top: 20px;
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
     .content-section p,
-    .content-section ul {
+    .content-section ul, 
+    .content-section li {
       font-size: 1.1rem;
       line-height: 1.6;
       color: #333;
     }
-    .content-section ul {
-      margin-right: 2rem;
-      list-style: disc;
+    .type-box {
+      background: #f8f9fa;
+      border-right: 4px solid #0056b3; /* כחול - פונקציונלי */
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 4px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     }
-    .question-block {
-      background-color: #f9f9f9;
+    .type-box.non-func {
+      border-right-color: #e67e22; /* כתום - לא פונקציונלי */
+    }
+    .type-box.change {
+      border-right-color: #27ae60; /* ירוק - בדיקות שינויים */
+    }
+    .type-box.methods {
+      border-right-color: #9b59b6; /* סגול - שיטות נוספות */
+    }
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+      margin-bottom: 25px;
+    }
+    .comparison-table th, .comparison-table td {
       border: 1px solid #ddd;
-      padding: 1rem;
-      margin: 1rem 0;
-      border-radius: 5px;
+      padding: 12px;
+      text-align: right;
+    }
+    .comparison-table th {
+      background-color: #0056b3;
+      color: white;
+    }
+    .comparison-table tr:nth-child(even) {
+      background-color: #f2f2f2;
     }
   </style>
 </head>
 <body>
-  <!-- כותרת עליונה -->
-<header>
-  <h1>סוגי בדיקות תוכנה</h1>
+  <header>
+  <h1>סוגי בדיקות תוכנה - המדריך השלם</h1>
   <nav>
     <a href="index.html" class="back-home">עמוד הבית</a>
   </nav>
 </header>
 
-
-  <!-- תוכן העמוד -->
   <main class="content-section">
-    <!-- מבוא -->
     <section class="introduction">
-      <h2>היכרות עם הסוגים השונים של בדיקות</h2>
+      <h2>למה יש כל כך הרבה סוגי בדיקות?</h2>
       <p>
-        קיימים שני סוגים עיקריים של בדיקות: פונקציונליות (Functional) ולא־פונקציונליות (Non-Functional).
-        כל סוג מתמקד בהיבט אחר של איכות המערכת.
+        כמו שלא בודקים רכב רק בנסיעה ישרה, אלא בודקים גם בלמים, מזגן, בטיחות ונוחות - כך גם בתוכנה.
+        אנחנו מחלקים את הבדיקות לקטגוריות כדי לוודא שלא פספסנו שום היבט של איכות.
       </p>
     </section>
 
-    <!-- עקרונות בסיסיים -->
-    <section class="basics">
-      <h2>סוגי בדיקות נפוצים</h2>
-      <ul>
-        <li><strong>בדיקות פונקציונליות:</strong> בדיקת דרישות המערכת ותפקודה מול המפרט.</li>
-        <li><strong>בדיקות עומס וביצועים:</strong> מדידת התנהגות המערכת תחת עומס גבוה.</li>
-        <li><strong>בדיקות אבטחה:</strong> זיהוי פרצות ופגיעויות במערכת.</li>
-        <li><strong>בדיקות שמישות (Usability):</strong> בדיקת חוויית המשתמש ונוחות השימוש.</li>
-        <li><strong>בדיקות תאימות (Compatibility):</strong> בדיקה בסביבות, דפדפנים ומכשירים שונים.</li>
-        <li><strong>בדיקות תחזוקה (Regression):</strong> בדיקות חוזרות לאחר שינויים או תיקונים בקוד.</li>
-      </ul>
-    </section>
+    <section>
+      <h2>1. בדיקות פונקציונליות (Functional Testing)</h2>
+      <p>השאלה המנחה: <strong>"מה המערכת עושה?"</strong> (האם הפיצ'ר עובד לפי הדרישות?)</p>
+      
+      <div class="type-box">
+        <h3>🧩 בדיקות יחידה (Unit Testing)</h3>
+        <p>בדיקה של רכיב קוד בודד ומבודד (למשל: פונקציה שמחשבת מע"מ). מבוצעת לרוב ע"י ה<strong>מתכנתים</strong>.</p>
+      </div>
 
-    <!-- תרגול ושאלות -->
-    <section class="practice">
-      <h2>תרגול ושאלות</h2>
-      <div class="question-block">
-        <p><strong>שאלה:</strong> אילו בדיקות עליכם לבצע לאחר עדכון אבטחה במערכת?</p>
-        <p><strong>תשובה:</strong> יש להריץ בדיקות אבטחה מחדש, בדיקות פונקציונליות כדי לוודא שאין שיבושים, ובדיקות רגרסיה כדי לבדוק שהתיקון לא יצר תקלות נוספות.</p>
+      <div class="type-box">
+        <h3>🔗 בדיקות אינטגרציה (Integration Testing)</h3>
+        <p>בדיקת הממשק והתקשורת בין שני רכיבים או יותר. למשל: האם האתר מצליח לשלוח נתונים למסד הנתונים? האם כפתור "סליקה" מתקשר בהצלחה עם PayPal?</p>
+      </div>
+
+      <div class="type-box">
+        <h3>💻 בדיקות מערכת (System Testing)</h3>
+        <p>זו העבודה העיקרית שלנו כ-QA! בדיקה של המערכת השלמה מקצה לקצה (End-to-End), בסביבה המדמה את סביבת הלקוח.</p>
+      </div>
+      
+      <div class="type-box">
+        <h3>🤝 בדיקות קבלה (UAT - User Acceptance Testing)</h3>
+        <p>השלב האחרון לפני השחרור. הלקוח האמיתי (או נציג המוצר) בודק את המערכת כדי לוודא שהיא פותרת לו את הבעיה העסקית.</p>
       </div>
     </section>
+
+    <section>
+      <h2>2. בדיקות לא-פונקציונליות (Non-Functional)</h2>
+      <p>השאלה המנחה: <strong>"איך המערכת מתנהגת?"</strong> (היא עובדת, אבל האם היא טובה?)</p>
+      
+      <div class="type-box non-func">
+        <h3>🚀 בדיקות עומס וביצועים (Performance/Load)</h3>
+        <p>איך המערכת מגיבה כש-10,000 משתמשים נכנסים ביחד? האם היא קורסת? האם זמן הטעינה איטי מדי?</p>
+      </div>
+
+      <div class="type-box non-func">
+        <h3>🔒 בדיקות אבטחה (Security)</h3>
+        <p>האם האקר יכול לגנוב פרטי אשראי? האם משתמש רגיל יכול לגשת לנתונים של המנהל (Admin)?</p>
+      </div>
+
+      <div class="type-box non-func">
+        <h3>📱 בדיקות תאימות (Compatibility)</h3>
+        <p>האם האתר עובד תקין גם באייפון וגם באנדרואיד? גם בכרום וגם בפיירפוקס? גם בווינדוס וגם במק?</p>
+      </div>
+
+      <div class="type-box non-func">
+        <h3>🎨 בדיקות שמישות (Usability)</h3>
+        <p>האם נוח להשתמש במוצר? האם הניווט אינטואיטיבי? האם ההודעות למשתמש ברורות? (בדיקה המתמקדת בחוויית המשתמש - UX).</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>3. בדיקות הקשורות לשינויים (Change Related)</h2>
+      <p>קיבלנו גרסה חדשה עם תיקון באג או פיצ'ר חדש. מה בודקים עכשיו?</p>
+
+      <div class="type-box change">
+        <h3>💨 בדיקות עשן (Smoke Testing)</h3>
+        <p>בדיקת "שער". בדיקה שטחית, רחבה ומהירה כדי לראות שהמערכת יציבה מספיק לבדיקות מעמיקות. אם המערכת קורסת בכניסה - עוצרים הכל ומחזירים למתכנת.</p>
+      </div>
+
+      <div class="type-box change">
+        <h3>🧠 בדיקות שפיות (Sanity Testing)</h3>
+        <p>בדיקה ממוקדת ועמוקה על הרכיב הספציפי שתוקן או השתנה, כדי לוודא שהוא עובד כמו שצריך (לפני שנריץ רגרסיה מלאה).</p>
+      </div>
+
+      <div class="type-box change">
+        <h3>🛡️ בדיקות רגרסיה (Regression Testing)</h3>
+        <p>הבדיקה החשובה ביותר לאחר שינוי! הרצת אוסף בדיקות קיימות כדי לוודא שהשינוי החדש <strong>לא קילקל</strong> (לא יצר רגרסיה) בחלקים אחרים במערכת שעבדו קודם.</p>
+      </div>
+
+      <table class="comparison-table">
+        <caption>טבלת חובה לראיונות: Re-test מול Regression</caption>
+        <thead>
+          <tr>
+            <th>Re-testing (בדיקה חוזרת / בדיקת אימות)</th>
+            <th>Regression (רגרסיה)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>בודקים את <strong>הבאג הספציפי</strong> שתוקן.</td>
+            <td>בודקים את <strong>שאר המערכת</strong> שלא נגעו בה.</td>
+          </tr>
+          <tr>
+            <td>המטרה: לוודא שהתיקון הצליח.</td>
+            <td>המטרה: לוודא שהתיקון לא יצר נזק אגבי.</td>
+          </tr>
+          <tr>
+            <td>מתבצע על באגים שנכשלו בעבר.</td>
+            <td>מתבצע על טסטים שעברו בהצלחה בעבר.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>4. גישות ומושגים נוספים (ISTQB)</h2>
+      
+      <div class="type-box methods">
+        <h3>🕵️ בדיקות חוקרות (Exploratory Testing)</h3>
+        <p>בדיקה ללא תסריט כתוב מראש. הבודק משתמש ביצירתיות ובידע שלו כדי ללמוד את המערכת ולמצוא באגים לא צפויים "תוך כדי תנועה". מעולה למציאת מקרי קצה.</p>
+      </div>
+
+      <div class="type-box methods">
+        <h3>🅰️/🅱️ בדיקות אלפא ובטא (Alpha & Beta)</h3>
+        <p>
+          <strong>Alpha:</strong> מבוצעת באתר הפיתוח ע"י עובדים פנימיים של הארגון.<br>
+          <strong>Beta:</strong> המערכת נפתחת לקבוצה נבחרת של לקוחות אמיתיים בסביבה חיצונית, כדי לקבל פידבק מהשטח לפני השקה מלאה.
+        </p>
+      </div>
+
+      <div class="type-box methods">
+        <h3>🔧 בדיקות תחזוקה (Maintenance Testing)</h3>
+        <p>בדיקות המבוצעות על מערכת שכבר נמצאת בייצור (Production), בעקבות שינויים כמו: שדרוג מערכת הפעלה, מיגרציה של דאטה-בייס, או תיקוני באגים דחופים (Hotfix).</p>
+      </div>
+    </section>
+
   </main>
 
-  <!-- Footer -->
   <footer>
     <p>© 2025 | נבנה באהבה עבור בודקי התוכנה העתידיים</p>
   </footer>

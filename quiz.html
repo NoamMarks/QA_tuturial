@@ -177,7 +177,8 @@
   
   <div class="quiz-header">
     <p>המבחן כולל 55 שאלות המחולקות ל-3 נושאים.<br>
-    <strong>שימו לב:</strong> המערכת שומרת את התשובות שלכם אוטומטית. ניתן לעצור ולהמשיך מאוחר יותר.</p>
+    <strong>שימו לב:</strong> המערכת שומרת את התשובות שלכם אוטומטית. ניתן לעצור ולהמשיך מאוחר יותר.<br>
+    סדר התשובות משתנה בכל ריענון דף.</p>
   </div>
 
   <div class="steps-indicator">
@@ -205,7 +206,7 @@
       <span id="finalScore">0</span>
     </div>
     <p class="feedback-msg" id="feedbackText"></p>
-    <button class="btn-next" onclick="location.reload()">נסה שוב</button>
+    <button class="btn-next" onclick="location.reload()">נסה שוב (עם סדר תשובות חדש)</button>
   </div>
 
 </main>
@@ -215,6 +216,19 @@
 </footer>
 
 <script>
+  // ==========================================
+  // בדיקת אבטחה / אדמין (חייב להיות ראשון)
+  // ==========================================
+  (function checkAccess() {
+    // בדיקה אם האדמין הסתיר את המבחן (quiz_is_active = false)
+    const isQuizActive = localStorage.getItem("quiz_is_active") !== "false";
+    
+    if (!isQuizActive) {
+      alert("⚠️ המבחן אינו זמין כעת.\nהמערכת מחזירה אותך לדף הבית.");
+      window.location.href = "index.html"; // זריקה לדף הבית
+    }
+  })();
+
   // ==========================================
   // 1. מאגר השאלות (Data)
   // ==========================================
@@ -299,6 +313,15 @@
   // ==========================================
   let currentSection = 0;
   
+  // פונקציית עזר לערבוב מערך (Shuffle)
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
   // טעינה ראשונית
   window.onload = function() {
     renderQuiz();
@@ -324,13 +347,27 @@
       section.questions.forEach((q, qIndex) => {
         const card = document.createElement("div");
         card.className = "question-card";
+
+        // יצירת מערך תשובות חכם המכיל גם את הטקסט וגם את האינדקס המקורי
+        // כך שגם אחרי הערבוב, נדע מה היה המספר המקורי של התשובה לבדיקה
+        let optionsWithIndex = q.options.map((opt, originalIndex) => {
+          return { text: opt, originalIndex: originalIndex };
+        });
+
+        // ערבוב התשובות באופן רנדומלי
+        optionsWithIndex = shuffleArray(optionsWithIndex);
+
         card.innerHTML = `
           <div class="question-text">${qIndex + 1}. ${q.q}</div>
           <div class="options-grid">
-            ${q.options.map((opt, optIndex) => `
-              <label class="option-label" id="lbl_${secIndex}_${qIndex}_${optIndex}">
-                <input type="radio" name="s${secIndex}_q${qIndex}" value="${optIndex}" class="option-input" onchange="saveProgress()">
-                <span>${opt}</span>
+            ${optionsWithIndex.map((optObj) => `
+              <label class="option-label" id="lbl_${secIndex}_${qIndex}_${optObj.originalIndex}">
+                <input type="radio" 
+                       name="s${secIndex}_q${qIndex}" 
+                       value="${optObj.originalIndex}" 
+                       class="option-input" 
+                       onchange="saveProgress()">
+                <span>${optObj.text}</span>
               </label>
             `).join('')}
           </div>
@@ -403,6 +440,7 @@
     if (saved) {
       const answers = JSON.parse(saved);
       for (const [name, value] of Object.entries(answers)) {
+        // מכיוון שאנחנו מייצרים את הערך (value) כאינדקס המקורי, זה יעבוד גם אחרי הערבוב
         const input = document.querySelector(`input[name="${name}"][value="${value}"]`);
         if (input) input.checked = true;
       }
@@ -436,12 +474,13 @@
 
         if (selected) {
           const val = parseInt(selected.value);
+          // הבדיקה נעשית מול האינדקס המקורי שנשמר ב-value
           if (val === q.ans) {
             score++;
             card.querySelector(`#lbl_${secIndex}_${qIndex}_${val}`).classList.add("correct-answer");
           } else {
             card.querySelector(`#lbl_${secIndex}_${qIndex}_${val}`).classList.add("wrong-answer");
-            // סימון התשובה הנכונה כדי שהמשתמש ילמד
+            // סימון התשובה הנכונה
             card.querySelector(`#lbl_${secIndex}_${qIndex}_${q.ans}`).classList.add("correct-answer");
           }
         }

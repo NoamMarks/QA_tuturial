@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ממשק ניהול - QA Portal</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .admin-container {
+      max-width: 500px;
+      margin: 4rem auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover { opacity: 0.9; }
+    
+    .status-box {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+    .active { background: #d4edda; color: #155724; }
+    .hidden { background: #f8d7da; color: #721c24; }
+
+    #controlsArea { display: none; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🔐 ממשק ניהול</h1>
+    <nav><a href="index.html" class="back-home">חזרה לאתר</a></nav>
+  </header>
+
+  <main class="admin-container">
+    
+    <div id="loginArea">
+      <h2>הזדהות מנהל</h2>
+      <input type="text" id="username" placeholder="שם משתמש">
+      <input type="password" id="password" placeholder="סיסמה">
+      <button onclick="login()">התחבר</button>
+    </div>
+
+    <div id="controlsArea">
+      <h2>ניהול המבחן</h2>
+      <p>סטטוס נוכחי:</p>
+      <div id="statusDisplay" class="status-box">...</div>
+      
+      <div style="margin-top: 20px;">
+        <button onclick="setQuizState(true)" style="background: #28a745;">✅ הפעל את המבחן</button>
+        <button onclick="setQuizState(false)" style="background: #dc3545;">⛔ הסתר את המבחן</button>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    // הגדרות כניסה (שנה כאן אם תרצה)
+    const ADMIN_USER = "admin";
+    const ADMIN_PASS = "123456";
+
+    function login() {
+      const user = document.getElementById("username").value;
+      const pass = document.getElementById("password").value;
+
+      if (user === ADMIN_USER && pass === ADMIN_PASS) {
+        document.getElementById("loginArea").style.display = "none";
+        document.getElementById("controlsArea").style.display = "block";
+        updateStatusDisplay();
+      } else {
+        alert("שם משתמש או סיסמה שגויים!");
+      }
+    }
+
+    function setQuizState(isActive) {
+      // אם true - המבחן פעיל. אם false - המבחן מוסתר.
+      // נשמור ב-localStorage כמחרוזת כי זה מה שהוא יודע לשמור
+      localStorage.setItem("quiz_is_active", isActive ? "true" : "false");
+      updateStatusDisplay();
+      alert(isActive ? "המבחן כעת גלוי לכולם." : "המבחן כעת מוסתר.");
+    }
+
+    function updateStatusDisplay() {
+      const isActive = localStorage.getItem("quiz_is_active") === "true"; 
+      // ברירת מחדל: אם לא מוגדר כלום, נניח שהמבחן פעיל (או שנה ל-false אם תרצה שיהיה מוסתר בהתחלה)
+      
+      const display = document.getElementById("statusDisplay");
+      if (isActive) {
+        display.innerText = "🟢 המבחן פעיל ומוצג באתר";
+        display.className = "status-box active";
+      } else {
+        display.innerText = "🔴 המבחן מוסתר מהמשתמשים";
+        display.className = "status-box hidden";
+      }
+    }
+  </script>
+</body>
+</html>

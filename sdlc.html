@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>מחזור חיי פיתוח תוכנה (SDLC) – ISTQB</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>איך מפתחים תוכנה? (SDLC)</h1>
+    <nav><a href="index.html" class="back-home">עמוד הבית</a></nav>
+  </header>
+
+  <div class="page-container">
+    <aside class="toc">
+      <h2>תוכן העניינים</h2>
+      <ul>
+        <li><a href="#intro">מה זה SDLC?</a></li>
+        <li><a href="#phases">שלבי הפיתוח</a></li>
+        <li><a href="#tester-role">🕵️ איפה הבודק נכנס לתמונה?</a></li>
+        <li><a href="#agile">ההבדל בין Waterfall ל-Agile</a></li>
+      </ul>
+    </aside>
+
+    <main class="content">
+      <section id="intro">
+        <h2>מבוא ל-SDLC</h2>
+        <p>כדי לבנות בניין, צריך אדריכל, מהנדס וקבלן. אי אפשר לבנות קומה שנייה לפני הראשונה.
+        כך גם בתוכנה - SDLC (Software Development Life Cycle) הוא התהליך המובנה של יצירת תוכנה.</p>
+      </section>
+
+      <section id="phases">
+        <h2>שלבי הפיתוח הקלאסיים</h2>
+        <ol>
+            <li><strong>ייזום ודרישות:</strong> הלקוח מגדיר מה הוא רוצה ("אני רוצה אתר מכירות").</li>
+            <li><strong>אפיון ועיצוב:</strong> מחליטים איך זה ייראה ואיזה טכנולוגיות ישמשו.</li>
+            <li><strong>פיתוח (Coding):</strong> המתכנתים כותבים את הקוד.</li>
+            <li><strong>בדיקות (Testing):</strong> אנחנו נכנסים לפעולה ומוודאים שהכל תקין.</li>
+            <li><strong>עלייה לאוויר ותחזוקה:</strong> המוצר אצל הלקוח.</li>
+        </ol>
+      </section>
+
+      <section id="tester-role">
+        <h2>🕵️ איפה בודק התוכנה משתלב? (לא רק בסוף!)</h2>
+        <p>טעות נפוצה היא לחשוב שהבודק מקבל את המוצר רק כשהוא מוכן. בפועל, בודק טוב מעורב מההתחלה:</p>
+        
+        <div style="background: #fff; border-left: 4px solid #4caf50; padding: 10px; margin-bottom: 10px;">
+            <strong>בשלב הדרישות:</strong> אנחנו קוראים את המסמכים ושואלים: "מה יקרה אם האינטרנט מתנתק באמצע?". אנחנו מוצאים באגים "על הנייר" לפני שנכתב קוד.
+        </div>
+        
+        <div style="background: #fff; border-left: 4px solid #2196f3; padding: 10px; margin-bottom: 10px;">
+            <strong>בשלב הפיתוח:</strong> בזמן שהמתכנתים עובדים, אנחנו כבר כותבים את ה-STD (מסמך הבדיקות) ומכינים את הנתונים.
+        </div>
+        
+        <div style="background: #fff; border-left: 4px solid #ff9800; padding: 10px;">
+            <strong>בשלב הבדיקות:</strong> אנחנו מריצים את הבדיקות הידניות שתכננו, פותחים באגים, ומוודאים שתיקנו אותם (Re-test).
+        </div>
+      </section>
+
+      <section id="agile">
+        <h2>המהפכה: עבודה ב-Agile</h2>
+        <p>בעבר עבדו בשיטת המפל (Waterfall) - שלב אחרי שלב. היום עובדים ב-Agile: עושים הכל במחזורים קצרים (ספרינטים) של שבועיים. בכל שבועיים מתכננים קצת, מפתחים קצת ובודקים קצת.</p>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    <p>© 2025 | נבנה באהבה עבור בודקי התוכנה העתידיים</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>מבוא לאוטומציה - ISTQB</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+  <h1>מבוא לאוטומציה</h1>
+  <nav>
+    <a href="index.html" class="back-home">עמוד הבית</a>
+  </nav>
+</header>
+
+  <div class="page-container">
+    <aside class="toc">
+        <h2>תוכן העניינים</h2>
+        <ul>
+            <li><a href="#intro">מה זה אוטומציה?</a></li>
+            <li><a href="#pyramid">פירמידת הבדיקות</a></li>
+            <li><a href="#when-to">מתי עושים אוטומציה?</a></li>
+            <li><a href="#tools">כלים נפוצים</a></li>
+        </ul>
+    </aside>
+
+    <main class="content">
+        <section id="intro">
+          <h2>חשיבות האוטומציה בבדיקות</h2>
+          <p>
+            אוטומציה היא שימוש בתוכנה (קוד) כדי להריץ בדיקות ולוודא תוצאות, במקום לעשות זאת ידנית.
+            המטרה היא לא להחליף את הבודק הידני, אלא לשחרר אותו מהבדיקות המשעממות והחוזרות (רגרסיה) כדי שיוכל להתמקד בבדיקות חכמות ומורכבות יותר.
+          </p>
+        </section>
+
+        <section id="pyramid">
+            <h2>🔺 מודל פירמידת הבדיקות (Test Pyramid)</h2>
+            <p>חוק חשוב באוטומציה: לא בודקים הכל דרך המסך (UI). נהוג לחלק את האוטומציה ל-3 שכבות:</p>
+            
+            <div style="background: #fff; padding: 15px; border: 1px solid #ddd; border-radius: 8px;">
+                <h3 style="color: #d32f2f;">1. בדיקות UI / E2E (קצה הפירמידה - מעט בדיקות)</h3>
+                <p>בדיקות שמדמות משתמש אמיתי (לוחצות על כפתורים בדפדפן). הן <strong>איטיות</strong>, שבירות (נשברות כשמשנים עיצוב), ויקרות לתחזוקה. נכתוב מהן רק עבור תהליכים קריטיים.</p>
+                
+                <h3 style="color: #f57c00;">2. בדיקות אינטגרציה / API (אמצע - כמות בינונית)</h3>
+                <p>בדיקות שבודקות את ה"מוח" של המערכת בלי הממשק הגרפי. הן מהירות יותר ויציבות יותר. (למשל Postman).</p>
+                
+                <h3 style="color: #388e3c;">3. Unit Tests (בסיס רחב - המון בדיקות)</h3>
+                <p>בדיקות ברמת הקוד שנכתבות ע"י המתכנתים. הן רצות תוך אלפיות השנייה ובודקות פונקציות בודדות.</p>
+            </div>
+        </section>
+
+        <section id="when-to">
+          <h2>מתי כדאי לעשות אוטומציה?</h2>
+          <p>לא כל דבר צריך לאטמט. הכלל המנחה הוא החזר השקעה (ROI):</p>
+          <ul>
+            <li>✅ <strong>בדיקות רגרסיה:</strong> בדיקות שרצות לפני כל שחרור גרסה.</li>
+            <li>✅ <strong>בדיקות עומסים:</strong> אי אפשר לדמות 1000 משתמשים ידנית.</li>
+            <li>✅ <strong>תהליכים מורכבים וחוזרים:</strong> למשל יצירת משתמשים עם המון נתונים.</li>
+            <li>❌ <strong>בדיקות חד פעמיות:</strong> אם הבדיקה תרוץ רק פעם אחת, עדיף ידנית.</li>
+            <li>❌ <strong>בדיקות UX:</strong> מחשב לא יודע להגיד אם העיצוב "יפה" או "נוח".</li>
+          </ul>
+        </section>
+
+        <section id="tools">
+            <h2>כלים נפוצים בתעשייה</h2>
+            <ul>
+                <li><strong>Selenium:</strong> הכלי הוותיק ביותר לבדיקות UI (Web).</li>
+                <li><strong>Playwright / Cypress:</strong> הכלים המודרניים והמהירים יותר לבדיקות Web.</li>
+                <li><strong>Appium:</strong> לבדיקות מובייל (Android/iOS).</li>
+                <li><strong>Postman / SoapUI:</strong> לבדיקות API.</li>
+                <li><strong>Jenkins / GitLab CI:</strong> מריצים את האוטומציה בלילה.</li>
+            </ul>
+        </section>
+    </main>
+  </div>
+  <footer>
+    <p>© 2025 | נבנה באהבה עבור בודקי התוכנה העתידיים</p>
+  </footer>
+</body>
+</html>

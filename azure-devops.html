@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Azure DevOps לבודק תוכנה</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Azure DevOps לבודק תוכנה</h1>
+    <nav><a href="index.html" class="back-home">עמוד הבית</a></nav>
+  </header>
+
+  <div class="page-container">
+    <aside class="toc">
+      <h2>תוכן העניינים</h2>
+      <ul>
+        <li><a href="#qa-role">תפקיד ה-QA ב-Azure DevOps</a></li>
+        <li><a href="#components">רכיבים חשובים</a></li>
+        <li><a href="#workflow">יום בחיי בודק (Workflow)</a></li>
+        <li><a href="#skills">כישורים נדרשים</a></li>
+        <li><a href="#tips">טיפים לעבודה נכונה</a></li>
+      </ul>
+    </aside>
+
+    <main class="content">
+      <section id="qa-role">
+        <h2>תפקיד ה-QA ב-Azure DevOps</h2>
+        <p>Azure DevOps (או ADO) הוא הכלי המרכזי לניהול פרויקטי פיתוח במיקרוסופט ובארגונים רבים. כבודקי תוכנה, זה ה"משרד" הדיגיטלי שלנו - שם אנחנו מקבלים משימות, מדווחים על באגים ועוקבים אחרי התקדמות.</p>
+      </section>
+
+      <section id="components">
+        <h2>רכיבים חשובים ל-QA</h2>
+        <h3>Boards (לוחות)</h3>
+        <p>לוח המשימות (כמו Trello או Jira). כאן נראה פתקיות עם משימות פיתוח ("To Do", "In Progress", "Ready for QA").</p>
+
+        <h3>Repos (קוד)</h3>
+        <p>איפה שהקוד יושב. בודקים מתקדמים ייכנסו לכאן כדי לראות את השינויים בקוד או לנהל את קוד האוטומציה שלהם.</p>
+
+        <h3>Pipelines (אוטומציה)</h3>
+        <p>פס הייצור האוטומטי. כאן נראה אם הגרסה החדשה "נבנתה" בהצלחה ואם הטסטים האוטומטיים עברו.</p>
+
+        <h3>Test Plans (תוכניות בדיקה)</h3>
+        <p>האזור הייעודי לנו. כאן כותבים את ה-STD (מסמכי הבדיקות), מריצים בדיקות ידניות ומפיקים דוחות.</p>
+      </section>
+
+      <section id="workflow">
+        <h2>📅 תרחיש: יום בחיי בודק ב-Azure DevOps</h2>
+        <p>איך נראית העבודה בפועל? הנה זרימה טיפוסית של בוקר:</p>
+        <ol>
+          <li>
+            <strong>בדיקת הלוח (Boards):</strong> נכנסים ללוח הספרינט. רואים שמפתח העביר משימה (User Story) לעמודת <span style="background:#e8f5e9; padding:2px 5px; border-radius:3px;">Ready for QA</span>.
+          </li>
+          <li>
+            <strong>הכנת הבדיקה (Test Plans):</strong> ניגשים לאזור ה-Test Plans, מוצאים את תסריט הבדיקה שהכנו למשימה הזו ולוחצים על <strong>Run</strong>.
+          </li>
+          <li>
+            <strong>ביצוע ודיווח:</strong> חלון צדדי נפתח. עוברים שלב-שלב במערכת ומסמנים V (עבר) או X (נכשל).
+          </li>
+          <li>
+            <strong>מציאת באג:</strong> אחד השלבים נכשל!
+            <ul>
+              <li>לוחצים על "Create Bug" מתוך החלון.</li>
+              <li>המערכת אוטומטית מצרפת את הצעדים שעשינו.</li>
+              <li>אנחנו מוסיפים צילום מסך, כותבים חומרה (Severity) ושומרים.</li>
+            </ul>
+          </li>
+          <li>
+            <strong>סיום:</strong> הבאג מופיע בלוח (Backlog) והמפתח מקבל התראה.
+          </li>
+        </ol>
+      </section>
+
+      <section id="skills">
+        <h2>כישורים חשובים</h2>
+        <ul>
+          <li>הבנה של תהליך Agile & Scrum.</li>
+          <li>יכולת כתיבת באג ברור (צעדים לשחזור, תוצאה צפויה vs מצויה).</li>
+          <li>יכולת קריאת דוחות ריצה של Pipelines (להבין למה טסט נפל).</li>
+        </ul>
+      </section>
+
+      <section id="tips">
+        <h2>טיפים לעבודה נכונה</h2>
+        <ul>
+          <li><strong>קישוריות (Traceability):</strong> תמיד תקשרו את הבאג למשימה (Requirement) ואת הטסט למשימה. ככה יודעים איזה טסט בודק איזו דרישה.</li>
+          <li><strong>שימוש ב-Queries:</strong> צרו לעצמכם "שאילתה" אישית שמראה את כל הבאגים הפתוחים שאתם פתחתם, כדי לעקוב אם תיקנו אותם.</li>
+        </ul>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    <p>© 2025 | נבנה באהבה עבור בודקי התוכנה העתידיים</p>
+  </footer>
+</body>
+</html>

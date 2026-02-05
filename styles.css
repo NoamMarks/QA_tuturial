@@ -1,0 +1,353 @@
+/* ===== משתנים וצבעים (ערכת נושא מודרנית) ===== */
+:root {
+  --primary: #007bff;           /* כחול ראשי */
+  --primary-dark: #0056b3;      /* כחול כהה */
+  --accent: #ff9800;            /* כתום דגש */
+  --bg-body: #f4f6f8;           /* רקע כללי אפור בהיר */
+  --bg-card: #ffffff;           /* לבן נקי */
+  --text-main: #333333;         /* טקסט כהה */
+  --text-light: #666666;        /* טקסט משני */
+  --border: #e0e0e0;            /* גבולות עדינים */
+  --shadow: 0 4px 12px rgba(0,0,0,0.08); /* צללית רכה */
+  --container-width: 1100px;    /* רוחב מקסימלי לתוכן - מונע בריחה לצדדים */
+}
+
+/* ===== Reset בסיסי ===== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--bg-body);
+  color: var(--text-main);
+  line-height: 1.6;
+  direction: rtl; /* יישור לימין ברירת מחדל */
+}
+
+a {
+  text-decoration: none;
+  color: var(--primary);
+  transition: all 0.2s ease;
+}
+
+a:hover {
+  color: var(--primary-dark);
+}
+
+/* ===== Header (החלק העליון בכל עמוד) ===== */
+header {
+  background-color: #fff;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between; /* מרווח בין הכותרת לכפתור */
+  align-items: center;
+  border-bottom: 1px solid #e0e0e0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+header h1 {
+  font-size: 1.5rem;
+  color: var(--text-main);
+  margin: 0;
+}
+
+/* כפתור חזרה הביתה - עיצוב כפתור אמיתי */
+.back-home {
+  background-color: var(--primary);
+  color: #fff !important;
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.back-home:hover {
+  background-color: var(--primary-dark);
+  text-decoration: none;
+  transform: translateY(-2px);
+}
+
+/* ===== Hero Section (רק לעמוד הבית) ===== */
+.hero-section {
+  display: block; /* דורס את ה-flex של ה-header הרגיל */
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  color: #fff;
+  padding: 4rem 1rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  position: relative; /* ביטול sticky */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.hero-content h1 {
+  font-size: 2.5rem;
+  color: #fff;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.hero-content .subtitle {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  max-width: 700px;
+  margin: 0 auto 2rem auto;
+}
+
+/* תיבת חיפוש */
+#searchArea {
+  max-width: 500px;
+  margin: 0 auto;
+  position: relative;
+}
+
+#searchInput {
+  width: 100%;
+  padding: 12px 20px;
+  border-radius: 50px;
+  border: none;
+  font-size: 1rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  outline: none;
+}
+
+/* ===== Navigation Grid (המודולים בעמוד הבית) ===== */
+.main-nav {
+  max-width: var(--container-width);
+  margin: 0 auto 4rem auto; /* מירכוז העמוד */
+  padding: 0 1rem;
+}
+
+.learning-path {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* סידור אוטומטי */
+  gap: 2rem;
+}
+
+.module-group {
+  background: var(--bg-card);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: var(--shadow);
+  border-top: 5px solid var(--accent); /* פס צבעוני למעלה */
+  transition: transform 0.2s ease;
+}
+
+.module-group:hover {
+  transform: translateY(-5px); /* אפקט ריחוף */
+}
+
+.module-group h3 {
+  color: var(--text-main);
+  margin-bottom: 1.5rem;
+  font-size: 1.3rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.5rem;
+}
+
+.module-group ul {
+  list-style: none;
+}
+
+.module-group li {
+  margin-bottom: 0.8rem;
+}
+
+.module-group a {
+  display: block;
+  padding: 8px 12px;
+  background-color: #f9f9f9;
+  border-radius: 6px;
+  color: var(--text-main);
+  font-weight: 500;
+}
+
+.module-group a:hover {
+  background-color: var(--primary);
+  color: #fff;
+  padding-right: 18px; /* תזוזה קטנה באנימציה */
+}
+
+/* ===== הודעה של דף הבית (Landing Info) ===== */
+.landing-info {
+  max-width: 800px;
+  margin: 0 auto 4rem auto;
+  text-align: center;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+
+.landing-info h2 {
+  color: var(--primary-dark);
+  margin-bottom: 1rem;
+}
+
+/* ===== עמודים פנימיים (Layout) ===== */
+.page-container {
+  display: flex;
+  max-width: var(--container-width);
+  margin: 2rem auto;
+  gap: 2rem;
+  padding: 0 1rem;
+  align-items: flex-start;
+}
+
+/* סרגל צד (TOC) */
+.toc {
+  flex: 0 0 260px; /* רוחב קבוע */
+  position: sticky;
+  top: 90px; /* רווח מההדר הדביק */
+  background: var(--bg-card);
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+.toc h2 {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  color: var(--primary);
+}
+
+.toc ul {
+  list-style: none;
+}
+
+.toc li {
+  margin-bottom: 0.5rem;
+}
+
+.toc a {
+  font-size: 0.95rem;
+  color: var(--text-light);
+}
+
+.toc a:hover {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+/* תוכן ראשי בעמוד פנימי */
+.content {
+  flex: 1; /* תופס את שאר המקום */
+  background: var(--bg-card);
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  min-width: 0; /* מונע גלישה */
+}
+
+.content h2 {
+  color: var(--primary-dark);
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 0.5rem;
+  margin-top: 2rem;
+}
+.content h2:first-child { margin-top: 0; }
+
+.content h3 {
+  color: var(--accent);
+  margin-top: 1.5rem;
+}
+
+.content p, .content li {
+  margin-bottom: 1rem;
+  font-size: 1.05rem;
+}
+
+.content ul, .content ol {
+  padding-right: 1.5rem;
+}
+
+/* קוביות קוד */
+pre {
+  background: #2d2d2d;
+  color: #f8f8f2;
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  direction: ltr;
+  text-align: left;
+  font-family: 'Consolas', monospace;
+}
+
+code {
+  background: #f0f0f0;
+  padding: 2px 5px;
+  border-radius: 4px;
+  font-family: 'Consolas', monospace;
+  color: #d63384;
+}
+
+pre code {
+  background: none;
+  color: inherit;
+}
+
+/* טבלאות */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+}
+
+th, td {
+  border: 1px solid var(--border);
+  padding: 12px;
+  text-align: right;
+}
+
+th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 2rem;
+  margin-top: 3rem;
+  color: var(--text-light);
+  border-top: 1px solid var(--border);
+  background: #fff;
+}
+
+/* רספונסיביות למובייל */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .hero-section {
+    display: block;
+  }
+
+  .page-container {
+    flex-direction: column;
+  }
+  
+  .toc {
+    width: 100%;
+    position: relative;
+    top: 0;
+  }
+  
+  .content {
+    padding: 1.5rem;
+  }
+  
+  .learning-path {
+    grid-template-columns: 1fr; /* טור אחד במובייל */
+  }
+}

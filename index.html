@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>פורטל למידה – בודק תוכנה (QA)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  
+  <header class="hero-section">
+    <div class="hero-content">
+      <h1 dir="rtl">הדרך שלך לקריירה בבדיקות תוכנה</h1>
+      <p class="subtitle" dir="rtl">
+        פורטל למידה מעשי להכנה למבחני ISTQB וכניסה לתפקיד ראשון
+      </p>
+      
+      <div id="searchArea">
+        <form id="liveSearchForm" autocomplete="off" onsubmit="return false;">
+          <input
+            id="searchInput"
+            type="search"
+            placeholder="חפש שיעור או נושא..."
+            aria-label="חיפוש תוכן"
+          >
+        </form>
+      </div>
+    </div>
+  </header>
+
+  <nav class="main-nav">
+    <div id="navItemsContainer" class="learning-path">
+      
+      <div class="module-group">
+        <h3>🚀 מודול 1: יסודות ה-QA</h3>
+        <ul>
+          <li><a href="basics.html">1. מבוא ויסודות הבדיקות</a></li>
+          <li><a href="sdlc.html">2. מחזור חיי פיתוח (SDLC)</a></li>
+          <li><a href="types.html">3. סוגי בדיקות תוכנה</a></li>
+        </ul>
+      </div>
+
+      <div class="module-group">
+        <h3>📋 מודול 2: ניהול ומתודולוגיה</h3>
+        <ul>
+          <li><a href="agile-scrum.html">4. עבודה בשיטת Agile & Scrum</a></li>
+          <li><a href="test-management.html">5. כתיבת מסמכים (STP, STD)</a></li>
+          <li><a href="azure-devops.html">6. כלי ניהול: Azure DevOps</a></li>
+        </ul>
+      </div>
+
+      <div class="module-group">
+        <h3>🛠️ מודול 3: כלים טכניים</h3>
+        <ul>
+          <li><a href="api-postman.html">7. בדיקות API ו-Postman</a></li>
+          <li><a href="database-types.html">8. עבודה עם SQL ונתונים</a></li>
+          <li><a href="devtools.html">9. כלי המפתחים (Chrome DevTools)</a></li>
+          <li><a href="automation.html">10. מבוא לאוטומציה</a></li>
+        </ul>
+      </div>
+      
+      <div class="module-group">
+        <h3>🧠 מודול 4: מתקדם והעשרה</h3>
+        <ul>
+          <li><a href="test-design.html">11. טכניקות עיצוב בדיקות</a></li>
+          <li><a href="performance.html">12. בדיקות עומסים וביצועים</a></li>
+          <li><a href="cyber-glossary.html">13. מושגי סייבר לבודקים</a></li>
+          <li><a href="tools.html">14. סקירת כלי בדיקות נוספים</a></li>
+        </ul>
+      </div>
+
+    </div>
+    
+    <p id="noCategoriesMsg" style="display: none; text-align:center; margin-top:20px; color:#666;">
+      לא נמצאו שיעורים התואמים לחיפוש שלך
+    </p>
+  </nav>
+
+  <main class="landing-info">
+    <h2>איך ללמוד מהאתר?</h2>
+    <p>
+      האתר בנוי בצורה הדרגתית. מומלץ להתחיל ממודול 1 ולהתקדם לפי הסדר.
+      בכל שיעור תמצאו הסברים תיאורטיים, דוגמאות מעשיות מהשטח, ותרגילים.
+    </p>
+  </main>
+
+  <footer>
+    <p>© 2025 | נבנה עבור דור העתיד של בודקי התוכנה</p>
+  </footer>
+  
+  <script>
+    const searchInput = document.getElementById("searchInput");
+    const moduleGroups = document.querySelectorAll(".module-group");
+    const noCategoriesMsg = document.getElementById("noCategoriesMsg");
+
+    searchInput.addEventListener("input", function() {
+      const query = searchInput.value.toLowerCase().trim();
+      let totalVisibleItems = 0;
+
+      moduleGroups.forEach(group => {
+        const listItems = group.querySelectorAll("li");
+        let groupHasVisibleItems = false;
+
+        listItems.forEach(item => {
+          const text = item.textContent.toLowerCase();
+          if (text.includes(query) || query === "") {
+            item.style.display = ""; 
+            groupHasVisibleItems = true;
+            totalVisibleItems++;
+          } else {
+            item.style.display = "none";
+          }
+        });
+
+        if (groupHasVisibleItems) {
+          group.style.display = "";
+        } else {
+          group.style.display = "none";
+        }
+      });
+
+      if (totalVisibleItems === 0) {
+        noCategoriesMsg.style.display = "block";
+      } else {
+        noCategoriesMsg.style.display = "none";
+      }
+    });
+  </script>
+</body>
+</html>

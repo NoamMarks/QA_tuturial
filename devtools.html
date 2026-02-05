@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>שיעור 9: כלי המפתחים (Chrome DevTools)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>שיעור 9: כלי המפתחים (F12)</h1>
+    <nav><a href="index.html" class="back-home">חזרה לבית</a></nav>
+  </header>
+
+  <div class="page-container">
+    <aside class="toc">
+      <h2>תוכן השיעור</h2>
+      <ul>
+        <li><a href="#intro">למה ללחוץ F12?</a></li>
+        <li><a href="#console">לשונית Console</a></li>
+        <li><a href="#network">לשונית Network (קריטי!)</a></li>
+        <li><a href="#elements">לשונית Elements</a></li>
+        <li><a href="#mobile">הדמיית מובייל</a></li>
+      </ul>
+    </aside>
+
+    <main class="content">
+      <section id="intro">
+        <h2>למה בודק צריך את זה?</h2>
+        <p>כבודקים, אנחנו לא מסתפקים ב"יש תקלה". אנחנו רוצים להבין <strong>למה</strong>. <br>
+        הדפדפן מכיל כלי עוצמתי שנקרא <strong>DevTools</strong> שמאפשר לנו לראות מה קורה מאחורי הקלעים.</p>
+        <div style="background:#e3f2fd; padding:15px; border-radius:8px; border-right: 5px solid #2196f3;">
+            <strong>תרגול מיידי:</strong> לחצו עכשיו על <code>F12</code> במקלדת (או קליק ימני בעכבר -> "בדוק" / "Inspect"). החלון שנפתח הוא ה-DevTools.
+        </div>
+      </section>
+
+      <section id="console">
+        <h2>1. לשונית Console (יומן השגיאות)</h2>
+        <p>כשיש באג ב-JavaScript (הלוגיקה של האתר), הוא לרוב יופיע כאן באדום.</p>
+        <p><strong>מתי להסתכל כאן?</strong></p>
+        <ul>
+            <li>כשלוחצים על כפתור ושום דבר לא קורה.</li>
+            <li>כשחלקים באתר לא נטענים.</li>
+        </ul>
+        <div style="background:#fff3e0; padding:15px; border-radius:8px; border-right: 5px solid #ff9800;">
+            <strong>טיפ זהב:</strong> אם ראיתם שורה אדומה ב-Console בזמן התקלה, צלמו אותה וצרפו לבאג! המתכנת יאהב אתכם.
+        </div>
+      </section>
+
+      <section id="network">
+        <h2>2. לשונית Network (הכי חשוב!)</h2>
+        <p>כאן רואים את התקשורת בין האתר לבין השרת. כאן תגלו אם הבעיה היא אצלכם (אינטרנט) או בשרת.</p>
+        
+        <h3>קודי שגיאה נפוצים שרואים כאן:</h3>
+        <table>
+            <tr>
+                <th>קוד</th>
+                <th>משמעות</th>
+            </tr>
+            <tr>
+                <td style="color:green; font-weight:bold;">200 OK</td>
+                <td>הכל תקין, הבקשה עברה בהצלחה.</td>
+            </tr>
+            <tr>
+                <td style="color:orange; font-weight:bold;">400 Bad Request</td>
+                <td>שלחתם מידע לא תקין (באג בממשק).</td>
+            </tr>
+            <tr>
+                <td style="color:orange; font-weight:bold;">404 Not Found</td>
+                <td>הדף או המידע לא קיים (קישור שבור).</td>
+            </tr>
+            <tr>
+                <td style="color:red; font-weight:bold;">500 Server Error</td>
+                <td>השרת קרס. זה באג קלאסי לפתיחה.</td>
+            </tr>
+        </table>
+      </section>
+
+      <section id="elements">
+        <h2>3. לשונית Elements (בדיקות UI)</h2>
+        <p>כאן רואים את ה-HTML (המבנה) וה-CSS (העיצוב). אפשר לשנות טקסטים וצבעים בזמן אמת כדי לבדוק דברים.</p>
+        <p><strong>תרחיש בדיקה:</strong> נסו לערוך כותרת קצרה ולכתוב בה טקסט ארוך מאוד. האם העיצוב נשבר? האם הטקסט בורח מהמסגרת?</p>
+      </section>
+
+      <section id="mobile">
+        <h2>4. כפתור המובייל (Device Toolbar)</h2>
+        <p>בפינה של ה-DevTools יש אייקון קטן של טלפון וטאבלט. לחיצה עליו הופכת את הדפדפן לסימולטור של מובייל.</p>
+        <p><strong>חובה לבדוק:</strong> תמיד תוודאו שהאתר רספונסיבי (נראה טוב) גם במסכים צרים כמו iPhone או Samsung Galaxy.</p>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    <p>© 2025 | נבנה באהבה עבור בודקי התוכנה העתידיים</p>
+  </footer>
+</body>
+</html>

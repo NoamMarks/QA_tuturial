@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>פורטל למידה – בודק תוכנה (QA)</title>
   <link rel="stylesheet" href="styles.css">
+  
+  <script src="config.js"></script>
 </head>
 <body>
   
@@ -95,7 +97,7 @@
     <p>© 2025 | נבנה עבור דור העתיד של בודקי התוכנה</p>
     <p style="margin-top: 10px;">
       <a href="admin.html" style="font-size: 0.8rem; color: #ccc; text-decoration: none;">
-        כניסת מנהל 🔒
+        ממשק ניהול (Mockup) 🔒
       </a>
     </p>
   </footer>
@@ -139,13 +141,11 @@
       }
     });
 
-    // --- לוגיקת אדמין (הסתרת המבחן) ---
+    // --- לוגיקת ניהול (Feature Flag) ---
     document.addEventListener("DOMContentLoaded", function() {
-      // בדיקה ב-localStorage האם המבחן הוגדר כ"מוסתר" ע"י האדמין
-      // ברירת מחדל: אם אין הגדרה, המבחן פעיל (true)
-      const isQuizActive = localStorage.getItem("quiz_is_active") !== "false"; 
-
-      if (!isQuizActive) {
+      // אם הקובץ config.js לא נטען או שהמבחן כבוי
+      if (typeof SITE_CONFIG === 'undefined' || !SITE_CONFIG.isQuizActive) {
+        
         // הסתרת הכפתור הראשי ב-Hero
         const heroContainer = document.getElementById("quizHeroContainer");
         if (heroContainer) heroContainer.style.display = "none";

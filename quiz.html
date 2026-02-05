@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>המבחן המסכם - בודק תוכנה (QA)</title>
   <link rel="stylesheet" href="styles.css">
+  
+  <script src="config.js"></script>
+
   <style>
     /* עיצוב ייחודי למבחן */
     .quiz-container {
@@ -217,15 +220,14 @@
 
 <script>
   // ==========================================
-  // בדיקת אבטחה / אדמין (חייב להיות ראשון)
+  // בדיקת אבטחה / Feature Flag (חייב להיות ראשון)
   // ==========================================
   (function checkAccess() {
-    // בדיקה אם האדמין הסתיר את המבחן (quiz_is_active = false)
-    const isQuizActive = localStorage.getItem("quiz_is_active") !== "false";
-    
-    if (!isQuizActive) {
-      alert("⚠️ המבחן אינו זמין כעת.\nהמערכת מחזירה אותך לדף הבית.");
-      window.location.href = "index.html"; // זריקה לדף הבית
+    // בדיקה מול קובץ הקונפיגורציה
+    // אם המשתנה לא קיים או שהוא false - זורקים החוצה
+    if (typeof SITE_CONFIG === 'undefined' || !SITE_CONFIG.isQuizActive) {
+      alert("⚠️ המבחן אינו זמין כעת.\nהמנהל סגר את הגישה למבחן באופן זמני.");
+      window.location.href = "index.html"; 
     }
   })();
 

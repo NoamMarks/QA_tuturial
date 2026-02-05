@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>המבחן המסכם - בודק תוכנה (QA)</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* עיצוב ייחודי למבחן */
+    .quiz-container {
+      max-width: 900px;
+      margin: 2rem auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    .quiz-header {
+      text-align: center;
+      margin-bottom: 2rem;
+      border-bottom: 2px solid #f0f0f0;
+      padding-bottom: 1rem;
+    }
+
+    /* סרגל התקדמות / טאבים */
+    .steps-indicator {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      background: #f8f9fa;
+      padding: 10px;
+      border-radius: 50px;
+    }
+    
+    .step {
+      flex: 1;
+      text-align: center;
+      padding: 10px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #777;
+      transition: all 0.3s;
+    }
+    
+    .step.active {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    /* שאלות */
+    .section-title {
+      color: var(--primary-dark);
+      margin-bottom: 1.5rem;
+      font-size: 1.4rem;
+      border-right: 5px solid var(--accent);
+      padding-right: 10px;
+    }
+
+    .question-card {
+      margin-bottom: 2rem;
+      padding: 1.5rem;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      background: #fff;
+      transition: transform 0.2s;
+    }
+    
+    .question-card:hover {
+      border-color: var(--primary);
+    }
+
+    .question-text {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: #333;
+    }
+
+    .options-grid {
+      display: grid;
+      gap: 8px;
+    }
+
+    .option-label {
+      display: flex;
+      align-items: center;
+      padding: 10px 15px;
+      background: #fdfdfd;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .option-label:hover {
+      background: #f0f8ff;
+      border-color: var(--primary);
+    }
+
+    .option-input {
+      margin-left: 10px;
+      accent-color: var(--primary);
+      width: 18px;
+      height: 18px;
+    }
+
+    /* כפתורי ניווט */
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid #eee;
+    }
+
+    button {
+      padding: 10px 25px;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-prev { background: #e0e0e0; color: #333; }
+    .btn-next { background: var(--primary); color: white; }
+    .btn-submit { background: var(--accent); color: white; font-weight: bold; }
+    .btn-reset { background: #ff4d4d; color: white; margin-right: auto; }
+
+    button:hover { opacity: 0.9; transform: translateY(-1px); }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* אזור תוצאות */
+    #resultArea {
+      display: none;
+      text-align: center;
+      animation: fadeIn 0.5s;
+    }
+    
+    .score-circle {
+      width: 150px;
+      height: 150px;
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin: 0 auto 1rem auto;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .feedback-msg { font-size: 1.2rem; margin-bottom: 2rem; }
+
+    /* משוב ויזואלי לתשובות (אחרי הגשה) */
+    .correct-answer { background-color: #d4edda !important; border-color: #c3e6cb !important; }
+    .wrong-answer { background-color: #f8d7da !important; border-color: #f5c6cb !important; }
+    
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🎓 המבחן המסכם - QA</h1>
+  <nav>
+    <a href="index.html" class="back-home">יציאה לדף הבית</a>
+  </nav>
+</header>
+
+<main class="quiz-container">
+  
+  <div class="quiz-header">
+    <p>המבחן כולל 55 שאלות המחולקות ל-3 נושאים.<br>
+    <strong>שימו לב:</strong> המערכת שומרת את התשובות שלכם אוטומטית. ניתן לעצור ולהמשיך מאוחר יותר.</p>
+  </div>
+
+  <div class="steps-indicator">
+    <div class="step active" id="step1" onclick="showSection(0)">חלק א': באגים</div>
+    <div class="step" id="step2" onclick="showSection(1)">חלק ב': מתודולוגיה</div>
+    <div class="step" id="step3" onclick="showSection(2)">חלק ג': Web וכלים</div>
+  </div>
+
+  <form id="quizForm">
+    <div id="questionsContainer"></div>
+  </form>
+
+  <div class="nav-buttons">
+    <button type="button" class="btn-reset" onclick="resetQuiz()">🗑️ איפוס ומחיקת שמירה</button>
+    <div>
+      <button type="button" class="btn-prev" id="prevBtn" onclick="changeSection(-1)" disabled>הקודם</button>
+      <button type="button" class="btn-next" id="nextBtn" onclick="changeSection(1)">הבא</button>
+      <button type="button" class="btn-submit" id="submitBtn" onclick="submitQuiz()" style="display:none;">הגש מבחן 🏁</button>
+    </div>
+  </div>
+
+  <div id="resultArea">
+    <h2>תוצאות המבחן</h2>
+    <div class="score-circle">
+      <span id="finalScore">0</span>
+    </div>
+    <p class="feedback-msg" id="feedbackText"></p>
+    <button class="btn-next" onclick="location.reload()">נסה שוב</button>
+  </div>
+
+</main>
+
+<footer>
+  <p>© 2025 | פורטל הלימודים - בודק תוכנה</p>
+</footer>
+
+<script>
+  // ==========================================
+  // 1. מאגר השאלות (Data)
+  // ==========================================
+  const quizData = [
+    // --- חלק א' ---
+    {
+      title: "חלק א' – דיווח וניהול באגים",
+      questions: [
+        { q: "מהו התנאי הקריטי ביותר לכך שבאג יהיה ניתן לשחזור?", options: ["צילום מסך ברור", "צעדים (Steps) ברורים ומדויקים", "הגדרת Severity נכונה", "צירוף לוגים מהשרת"], ans: 1 },
+        { q: "איזה Title (כותרת) הוא המקצועי ביותר לדיווח באג?", options: ["האתר קורס בלוגין", "בעיה חמורה בכפתור הכניסה", "Login fails with '404 error' when using valid credentials on Chrome", "Login is broken"], ans: 2 },
+        { q: "Expected Result (תוצאה צפויה) צריך להיגזר מתוך:", options: ["תחושת הבטן של הבודק", "התנהגות המערכת בפועל", "מסמך הדרישות/אפיון (PRD/User Story)", "מה שהיה בגרסה הקודמת"], ans: 2 },
+        { q: "Actual Result (תוצאה בפועל) מתאר:", options: ["מה שהיה אמור לקרות לפי האפיון", "מה שקרה במערכת ברגע הבדיקה", "את הצעדים לתיקון הבאג", "את סביבת הבדיקה"], ans: 1 },
+        { q: "מתי באג נחשב ל-Duplicate?", options: ["כשהוא מופיע גם בדפדפן כרום וגם בפיירפוקס", "כשהוא כבר דווח במערכת על ידי בודק אחר", "כשהוא חוזר על עצמו פעמיים באותו עמוד", "כשהוא קורה רק בסביבת ה-Production"], ans: 1 },
+        { q: "Severity (חומרה) מודד:", options: ["את דחיפות התיקון עבור הלקוח", "את רמת ההשפעה הטכנית על תפקוד המערכת", "את הזמן שייקח למפתח לתקן את הבאג", "את כמות המשתמשים שייחשפו לבאג"], ans: 1 },
+        { q: "Priority (עדיפות) מודד:", options: ["את הדחיפות העסקית לתיקון הבאג (לוחות זמנים)", "את מורכבות הקוד שגרם לבאג", "האם הבאג קוסמטי או פונקציונלי", "את רמת המיומנות הנדרשת מהבודק"], ans: 0 },
+        { q: "איזה באג סביר שיוגדר כ-Severity נמוך אך Priority גבוה?", options: ["קריסה מוחלטת של המערכת", "שגיאת כתיב בולטת בלוגו החברה בעמוד הבית", "פונקציונליות שלא עובדת בדפדפן ישן ונדיר", "אובדן נתונים במסד הנתונים"], ans: 1 },
+        { q: "מה עושים כשמפתח מסמן באג כ-'Works on my machine'?", options: ["סוגרים את הבאג מיד", "מתווכחים עם המפתח בצ'אט", "בודקים שוב, מוודאים סביבה (Cache, גרסה) ומספקים הוכחות/סרטון", "פותחים באג חדש זהה"], ans: 2 },
+        { q: "מהו מחזור החיים (Lifecycle) התקין של באג?", options: ["New -> Open -> Fixed -> Ready for Test -> Closed", "New -> Fixed -> Closed -> Open", "Open -> Fixed -> Re-open -> New", "New -> Closed -> Fixed"], ans: 0 },
+        { q: "באג מסוג Regression הוא:", options: ["באג חדש בפיצ'ר חדש", "באג ישן שתוקן וחזר להופיע בעקבות שינויי קוד", "באג קוסמטי בלבד", "באג שקורה רק פעם אחת ולא ניתן לשחזור"], ans: 1 },
+        { q: "מה הפירוש של סטטוס 'Deferred' (נדחה)?", options: ["הבאג אינו באג (Not a bug)", "הבאג יתוקן, אך הוחלט לדחות אותו לגרסה עתידית", "הבאג כבר תוקן בגרסה הנוכחית", "הבאג נשלח לבדיקה חוזרת"], ans: 1 },
+        { q: "מהו 'Negative Testing'?", options: ["בדיקה של המערכת עם קלט תקין בלבד", "בדיקה המנסה לגרום למערכת להיכשל על ידי הזנת נתונים לא תקינים", "בדיקה הנעשית כשבודק נמצא במצב רוח שלילי", "בדיקה של עיצוב האתר (UI) בלבד"], ans: 1 },
+        { q: "מה הדבר הראשון שכדאי לעשות לפני שפותחים באג חדש?", options: ["לדבר עם מנהל המוצר", "לחפש במערכת ניהול הבאגים אם הוא כבר קיים", "לנסות לתקן את הקוד לבד", "לצלם סרטון של 10 דקות"], ans: 1 },
+        { q: "מהו היתרון המרכזי בצירוף Logs לדיווח באג?", options: ["זה מקצר את זמן השחזור של הבודק", "זה עוזר למפתח להבין את השגיאה הפנימית בשרת/בקוד", "זה גורם לבאג לקבל Priority גבוה יותר אוטומטית", "זה מחליף את הצורך בכותרת לבאג"], ans: 1 },
+        { q: "באג 'Flaky' הוא:", options: ["באג שקורה תמיד בכל דפדפן", "באג שמופיע לסירוגין (לא עקבי)", "באג שקשור רק לצבעים ופונטים", "באג שנגרם עקב עומס משתמשים"], ans: 1 },
+        { q: "מי בדרך כלל קובע את ה-Severity של הבאג?", options: ["המפתח", "הבודק (QA)", "המשתמש הסופי", "המעצב"], ans: 1 },
+        { q: "מה עושים אם גילית באג קריטי 5 דקות לפני שחרור גרסה?", options: ["מתעלמים ממנו ומדווחים מחר", "מדווחים מיד ומרימים דגל אדום לכל הצוות (Go/No-Go)", "פותחים את הבאג ב-Priority נמוך כדי לא לעכב", "מנסים לתקן אותו בעצמכם"], ans: 1 },
+        { q: "מהו 'Workaround' בהקשר של באגים?", options: ["דרך עוקפת המאפשרת למשתמש לבצע את הפעולה למרות קיום הבאג", "הליך התיקון של המפתח", "כלי אוטומטי למציאת באגים", "מסמך אפיון חלופי"], ans: 0 },
+        { q: "מהו באג מסוג 'Edge Case'?", options: ["באג שקורה בשימוש הכי נפוץ באתר", "באג שקורה בתנאי קצה קיצוניים או נדירים מאוד", "באג בעיצוב הפינות של הכפתורים", "באג שקורה רק למנהלי מערכת"], ans: 1 }
+      ]
+    },
+    // --- חלק ב' ---
+    {
+      title: "חלק ב' – כתיבת Test Cases ומתודולוגיה",
+      questions: [
+        { q: "מהי המטרה העיקרית של כתיבת Test Cases?", options: ["להחליף את מסמך האפיון", "להבטיח בדיקה עקבית, ניתנת לשחזור וכיסוי דרישות מלא", "להעניש את המפתחים", "למלא את הזמן הפנוי של הבודק"], ans: 1 },
+        { q: "מהו 'Test Scenario'?", options: ["תיאור מפורט של צעדי הבדיקה", "תיאור כללי של 'מה' לבדוק (למשל: בדיקת תהליך הרכישה)", "הקוד של האוטומציה", "דוח סיכום הבדיקות"], ans: 1 },
+        { q: "Pre-condition (תנאי מקדים) ב-Test Case מתאר:", options: ["את התוצאה הצפויה", "מה חייב להתקיים במערכת לפני שמתחילים את הבדיקה", "את ההערות של המפתח", "את רמת הדחיפות של הבדיקה"], ans: 1 },
+        { q: "מהי טכניקת 'Equivalence Partitioning'?", options: ["בדיקת כל הערכים האפשריים בשדה", "חלוקת נתוני קלט לקבוצות שכל אחת מהן אמורה להתנהג אותו דבר", "בדיקה של המערכת תחת עומס", "כתיבת בדיקות רק עבור ערכים שליליים"], ans: 1 },
+        { q: "בשדה גיל המקבל ערכים בין 18 ל-120, מהם ערכי הקצה (BVA)?", options: ["17, 18, 120, 121", "50, 60, 70", "0, 100, 200", "18, 19, 119, 120"], ans: 0 },
+        { q: "מהו 'Happy Path'?", options: ["בדיקה של מצבי שגיאה", "תרחיש חיובי סטנדרטי שבו הכל עובד כצפוי ללא תקלות", "בדיקה שמתבצעת רק בימי ראשון", "בדיקה של עיצוב האתר בלבד"], ans: 1 },
+        { q: "מה ההבדל בין Verification ל-Validation?", options: ["אין הבדל", "Verification: האם בנינו נכון (לפי אפיון); Validation: האם בנינו את המוצר הנכון (ללקוח)", "Verification נעשה ע'י מפתחים, Validation ע'י QA", "Verification זה לבאגים, Validation זה ל-Test Cases"], ans: 1 },
+        { q: "מהי בדיקת Smoke?", options: ["בדיקה מעמיקה של כל פינה במערכת", "בדיקה בסיסית ומהירה של הפונקציות הקריטיות ביותר כדי לוודא שהמערכת 'חיה'", "בדיקת עומסים שגורמת לשרת 'להתעשן'", "בדיקת אבטחה כנגד האקרים"], ans: 1 },
+        { q: "מתי כותבים Test Cases בדרך כלל?", options: ["תוך כדי שהמפתחים כותבים את הקוד (או לפני כן, בשלב התכנון)", "רק אחרי שהגרסה כבר שוחררה ללקוח", "רק כשמוצאים באג", "כשמנהל הפרויקט מבקש דוחות"], ans: 0 },
+        { q: "מהו מסמך ה-STD?", options: ["מסמך אפיון דרישות", "מסמך המפרט את תוכנית הבדיקות ותרחישי הבדיקה (Test Cases)", "דוח סיכום שבועי", "רשימת הכלים בהם משתמשים"], ans: 1 },
+        { q: "מהו היתרון של בדיקות Exploratory?", options: ["הן תמיד יותר טובות מבדיקות מתוכננות", "הן מאפשרות לגלות באגים בלתי צפויים שלא חשבו עליהם ב-Test Cases המובנים", "הן לא דורשות ידע במערכת", "הן מחליפות את הצורך בבדיקות רגרסיה"], ans: 1 },
+        { q: "מה הפירוש של 'Test Coverage'?", options: ["כמות הבאגים שנמצאו", "המידה שבה הבדיקות שביצענו מכסות את כל הדרישות והפונקציות של המערכת", "שטח האחסון שהבדיקות תופסות", "כמות הבוחנים שעובדים על הפרויקט"], ans: 1 },
+        { q: "מהו 'Traceability Matrix'?", options: ["טבלה המקשרת בין הדרישות (Requirements) לבין ה-Test Cases שבודקים אותן", "רשימת כל המפתחים בצוות", "גרף של קצב מציאת באגים", "מפה של שרתי החברה"], ans: 0 },
+        { q: "בדיקת Sanity היא:", options: ["בדיקת רגרסיה מלאה", "בדיקה ממוקדת על אזור ספציפי שתוקן או השתנה כדי לוודא שהוא הגיוני ועובד", "בדיקה של בריאות הנפש של הבודק", "בדיקה אוטומטית בלבד"], ans: 1 },
+        { q: "מהו 'Error Guessing'?", options: ["ניחוש של מה תהיה התוצאה הצפויה", "טכניקת בדיקה המבוססת על אינטואיציה לגבי מקומות מועדים לפורענות", "ניחוש של סיסמת המשתמש", "כלי של בינה מלאכותית"], ans: 1 },
+        { q: "איזה מהבאים הוא Test Case חלש?", options: ["'בדוק שהמערכת עובדת טוב'", "'הכנס admin/123 ולחץ Login'", "'ודא שמתקבלת שגיאה אדומה בסיסמה קצרה'", "'בדוק כניסה עם משתמש חסום'"], ans: 0 },
+        { q: "בדיקות Ad-hoc הן:", options: ["בדיקות מתוכננות היטב", "בדיקות לא פורמליות, ללא מסמכי בדיקה מראש ('שלוף')", "בדיקות של בסיסי נתונים", "בדיקות לקוח"], ans: 1 },
+        { q: "מהי בדיקת User Acceptance Testing (UAT)?", options: ["בדיקת קוד ע'י מפתחים", "שלב הבדיקות הסופי שנעשה ע'י הלקוח לאישור המוצר", "בדיקת ביצועים", "בדיקת Smoke"], ans: 1 },
+        { q: "מהי בדיקת רגרסיה (Regression)?", options: ["בדיקת פיצ'ר חדש", "בדיקה חוזרת של אזורים קיימים כדי לוודא ששינוי לא הרס כלום", "בדיקה רק של באגים שנסגרו", "בדיקה ידנית של עיצוב"], ans: 1 },
+        { q: "איזה משפט נכון לגבי בדיקות?", options: ["בדיקות מוכיחות שאין באגים", "בדיקות מראות נוכחות של באגים, אך לא מוכיחות את העדרם", "יותר בדיקות = מערכת איטית", "לא צריך לבדוק אם המפתח אישר"], ans: 1 }
+      ]
+    },
+    // --- חלק ג' ---
+    {
+      title: "חלק ג' – Web, טכנולוגיה וכלים",
+      questions: [
+        { q: "מהו תפקידו של ה-Inspect Element בדפדפן?", options: ["למחוק את האתר", "לאפשר לבודק לראות HTML/CSS, רשת ושגיאות קונסול", "להאיץ את האינטרנט", "לכתוב אפיון"], ans: 1 },
+        { q: "שגיאת HTTP מסוג '404' אומרת ש:", options: ["יש שגיאה בשרת", "הדף המבוקש לא נמצא", "אין הרשאה", "הבקשה הצליחה"], ans: 1 },
+        { q: "שגיאת HTTP מסוג '500' אומרת ש:", options: ["הדף לא נמצא", "יש שגיאה כללית בשרת (Internal Server Error)", "מצב אנונימי", "אין סיסמה"], ans: 1 },
+        { q: "מהו 'Cache' ולמה הוא חשוב?", options: ["זיכרון זמני; חשוב לנקות אותו כדי לבדוק גרסה חדשה", "כלי לכתיבת באגים", "וירוס מחשב", "בסיס הנתונים"], ans: 0 },
+        { q: "מהי בדיקת Cross-Browser?", options: ["בדיקה שהאתר עובד זהה בדפדפנים שונים (Chrome, Firefox וכו')", "בדיקה שהאתר עובד ב-Windows", "בדיקת מהירות", "בדיקת קישורים"], ans: 0 },
+        { q: "מה ההבדל בין בדיקת Web במחשב לבין Mobile Web?", options: ["אין הבדל", "גדלי מסך, אינטראקציה (מגע), ומשאבי מערכת", "במובייל אי אפשר לפתוח את האתר", "במובייל אין באגים"], ans: 1 },
+        { q: "מהו 'Cookies'?", options: ["קבצי טקסט קטנים בדפדפן השומרים מידע על המשתמש", "פרסומות קופצות", "כלי עיצוב", "וירוס"], ans: 0 },
+        { q: "בלשונית Network ב-DevTools, מה רואים?", options: ["רשימת חברים", "את כל הקריאות (Requests) לשרת והתגובות", "היסטוריה", "טמפרטורת מעבד"], ans: 1 },
+        { q: "מהו 'Responsive Design'?", options: ["אתר מהיר", "אתר שמתאים את עצמו לגודל המסך (מחשב/נייד)", "אתר עם אנימציות", "אתר ששולח מיילים"], ans: 1 },
+        { q: "בדיקת GUI מתמקדת ב:", options: ["קוד השרת", "ממשק המשתמש הגרפי (עיצוב, צבעים, פונטים)", "מהירות DB", "אבטחה"], ans: 1 },
+        { q: "מהו הפירוש של 'API'?", options: ["ממשק המאפשר לשתי מערכות לתקשר ביניהן", "דפדפן חדש", "שפת עיצוב", "תוכנת בדיקות"], ans: 0 },
+        { q: "מהו כלי ה-Jira?", options: ["דפדפן", "מערכת לניהול פרויקטים ודיווח באגים", "שפת תכנות", "עורך תמונות"], ans: 1 },
+        { q: "מהי מתודולוגיית Agile?", options: ["שיטה איטית", "שיטה גמישה המבוססת על סבבים קצרים (Sprints)", "שיטה ללא QA", "בדיקה בסוף פרויקט"], ans: 1 },
+        { q: "מהו 'Sprint'?", options: ["ריצה למשרד", "פרק זמן קצוב (למשל שבועיים) לביצוע משימות מוגדרות", "ישיבת הנהלה", "תקלה חמורה"], ans: 1 },
+        { q: "מהו 'User Story'?", options: ["ספר משתמש", "תיאור פיצ'ר מנקודת מבט המשתמש ('בתור לקוח אני רוצה...')", "רשימת באגים", "היסטוריית שימוש"], ans: 1 }
+      ]
+    }
+  ];
+
+  // ==========================================
+  // 2. לוגיקה (Logic)
+  // ==========================================
+  let currentSection = 0;
+  
+  // טעינה ראשונית
+  window.onload = function() {
+    renderQuiz();
+    loadProgress(); // שחזור תשובות מ-localStorage
+    updateUI();
+  };
+
+  function renderQuiz() {
+    const container = document.getElementById("questionsContainer");
+    container.innerHTML = "";
+
+    quizData.forEach((section, secIndex) => {
+      const sectionDiv = document.createElement("div");
+      sectionDiv.className = "quiz-section";
+      sectionDiv.id = `section-${secIndex}`;
+      sectionDiv.style.display = secIndex === 0 ? "block" : "none";
+
+      const title = document.createElement("h2");
+      title.className = "section-title";
+      title.innerText = section.title;
+      sectionDiv.appendChild(title);
+
+      section.questions.forEach((q, qIndex) => {
+        const card = document.createElement("div");
+        card.className = "question-card";
+        card.innerHTML = `
+          <div class="question-text">${qIndex + 1}. ${q.q}</div>
+          <div class="options-grid">
+            ${q.options.map((opt, optIndex) => `
+              <label class="option-label" id="lbl_${secIndex}_${qIndex}_${optIndex}">
+                <input type="radio" name="s${secIndex}_q${qIndex}" value="${optIndex}" class="option-input" onchange="saveProgress()">
+                <span>${opt}</span>
+              </label>
+            `).join('')}
+          </div>
+        `;
+        sectionDiv.appendChild(card);
+      });
+
+      container.appendChild(sectionDiv);
+    });
+  }
+
+  // ניווט בין הטאבים
+  function changeSection(direction) {
+    const sections = document.querySelectorAll(".quiz-section");
+    sections[currentSection].style.display = "none";
+    document.getElementById(`step${currentSection + 1}`).classList.remove("active");
+    
+    currentSection += direction;
+    
+    sections[currentSection].style.display = "block";
+    document.getElementById(`step${currentSection + 1}`).classList.add("active");
+    
+    updateUI();
+    window.scrollTo(0, 0);
+  }
+
+  function showSection(index) {
+    const sections = document.querySelectorAll(".quiz-section");
+    sections[currentSection].style.display = "none";
+    document.getElementById(`step${currentSection + 1}`).classList.remove("active");
+    
+    currentSection = index;
+    
+    sections[currentSection].style.display = "block";
+    document.getElementById(`step${currentSection + 1}`).classList.add("active");
+    
+    updateUI();
+    window.scrollTo(0, 0);
+  }
+
+  function updateUI() {
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const submitBtn = document.getElementById("submitBtn");
+
+    prevBtn.disabled = currentSection === 0;
+    
+    if (currentSection === quizData.length - 1) {
+      nextBtn.style.display = "none";
+      submitBtn.style.display = "inline-block";
+    } else {
+      nextBtn.style.display = "inline-block";
+      submitBtn.style.display = "none";
+    }
+  }
+
+  // שמירה ל-localStorage
+  function saveProgress() {
+    const answers = {};
+    const inputs = document.querySelectorAll("input[type='radio']:checked");
+    inputs.forEach(input => {
+      answers[input.name] = input.value;
+    });
+    localStorage.setItem("qa_quiz_answers", JSON.stringify(answers));
+  }
+
+  // טעינה מ-localStorage
+  function loadProgress() {
+    const saved = localStorage.getItem("qa_quiz_answers");
+    if (saved) {
+      const answers = JSON.parse(saved);
+      for (const [name, value] of Object.entries(answers)) {
+        const input = document.querySelector(`input[name="${name}"][value="${value}"]`);
+        if (input) input.checked = true;
+      }
+    }
+  }
+
+  function resetQuiz() {
+    if(confirm("האם אתה בטוח? זה ימחק את כל התשובות שסימנת.")) {
+      localStorage.removeItem("qa_quiz_answers");
+      location.reload();
+    }
+  }
+
+  // הגשה וחישוב ציון
+  function submitQuiz() {
+    let score = 0;
+    let totalQuestions = 0;
+
+    quizData.forEach((section, secIndex) => {
+      section.questions.forEach((q, qIndex) => {
+        totalQuestions++;
+        const selected = document.querySelector(`input[name="s${secIndex}_q${qIndex}"]:checked`);
+        const cards = document.querySelectorAll(`#section-${secIndex} .question-card`);
+        const card = cards[qIndex];
+        
+        // ניקוי סימונים קודמים
+        const labels = card.querySelectorAll(".option-label");
+        labels.forEach(l => {
+          l.classList.remove("correct-answer", "wrong-answer");
+        });
+
+        if (selected) {
+          const val = parseInt(selected.value);
+          if (val === q.ans) {
+            score++;
+            card.querySelector(`#lbl_${secIndex}_${qIndex}_${val}`).classList.add("correct-answer");
+          } else {
+            card.querySelector(`#lbl_${secIndex}_${qIndex}_${val}`).classList.add("wrong-answer");
+            // סימון התשובה הנכונה כדי שהמשתמש ילמד
+            card.querySelector(`#lbl_${secIndex}_${qIndex}_${q.ans}`).classList.add("correct-answer");
+          }
+        }
+      });
+    });
+
+    // הצגת תוצאות
+    document.querySelector(".nav-buttons").style.display = "none";
+    document.getElementById("resultArea").style.display = "block";
+    
+    const finalScore = Math.round((score / totalQuestions) * 100);
+    document.getElementById("finalScore").innerText = finalScore;
+
+    const feedback = document.getElementById("feedbackText");
+    if(finalScore >= 90) feedback.innerText = "🏆 מדהים! אתה מוכן לגמרי לעבודה.";
+    else if(finalScore >= 70) feedback.innerText = "👍 עבודה טובה! יש עוד קצת על מה לחזור.";
+    else feedback.innerText = "📚 כדאי לעבור שוב על החומר הלימודי ולנסות שוב.";
+    
+    // חזרה לטאב הראשון כדי לראות את התיקונים
+    showSection(0);
+  }
+</script>
+
+</body>
+</html>

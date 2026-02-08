@@ -19,6 +19,7 @@
       padding: 2rem;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      position: relative;
     }
     
     .quiz-header {
@@ -27,6 +28,42 @@
       border-bottom: 2px solid #f0f0f0;
       padding-bottom: 1rem;
     }
+
+    /* --- תוספת: עיצוב הטיימר --- */
+    .timer-container {
+      position: sticky;
+      top: 10px;
+      z-index: 100;
+      text-align: center;
+      margin-bottom: 20px;
+      pointer-events: none; /* כדי לא להפריע ללחיצות */
+    }
+
+    .timer-box {
+      background: #333;
+      color: #fff;
+      display: inline-block;
+      padding: 10px 25px;
+      border-radius: 50px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      border: 2px solid #fff;
+      font-family: monospace; /* למראה דיגיטלי */
+      pointer-events: auto;
+    }
+
+    .timer-box.warning {
+      background: #d32f2f;
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    /* --------------------------- */
 
     /* סרגל התקדמות / טאבים */
     .steps-indicator {
@@ -180,9 +217,13 @@
 
 <main class="quiz-container">
   
+  <div class="timer-container">
+    <div id="quizTimer" class="timer-box">⏳ 75:00</div>
+  </div>
+
   <div class="quiz-header">
     <p>המבחן כולל 55 שאלות המחולקות ל-3 נושאים.<br>
-    <strong>שימו לב:</strong> המערכת שומרת את התשובות שלכם אוטומטית. ניתן לעצור ולהמשיך מאוחר יותר.<br>
+    <strong>שימו לב:</strong> המערכת שומרת את התשובות ואת הזמן באופן אוטומטי.<br>
     סדר התשובות משתנה בכל ריענון דף.</p>
   </div>
 
@@ -211,7 +252,7 @@
       <span id="finalScore">0</span>
     </div>
     <p class="feedback-msg" id="feedbackText"></p>
-    <button class="btn-next" onclick="location.reload()">נסה שוב (עם סדר תשובות חדש)</button>
+    <button class="btn-next" onclick="resetQuiz()">נסה שוב (איפוס מלא)</button>
   </div>
 
 </main>
@@ -222,16 +263,20 @@
 
 <script>
   // ==========================================
-  // בדיקת אבטחה / Feature Flag (חייב להיות ראשון)
+  // בדיקת אבטחה / Feature Flag
   // ==========================================
   (function checkAccess() {
-    // בדיקה מול קובץ הקונפיגורציה
-    // אם המשתנה לא קיים או שהוא false - זורקים החוצה
     if (typeof SITE_CONFIG === 'undefined' || !SITE_CONFIG.isQuizActive) {
       alert("⚠️ המבחן אינו זמין כעת.\nהמנהל סגר את הגישה למבחן באופן זמני.");
       window.location.href = "index.html"; 
     }
   })();
+
+  // ==========================================
+  // הגדרות טיימר
+  // ==========================================
+  const QUIZ_DURATION_MINUTES = 75; 
+  let timerInterval;
 
   // ==========================================
   // 1. מאגר השאלות (Data)
@@ -317,7 +362,6 @@
   // ==========================================
   let currentSection = 0;
   
-  // פונקציית עזר לערבוב מערך (Shuffle)
   function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -326,10 +370,10 @@
     return array;
   }
 
-  // טעינה ראשונית
   window.onload = function() {
     renderQuiz();
-    loadProgress(); // שחזור תשובות מ-localStorage
+    loadProgress(); 
+    startTimer(); // הפעלת הטיימר
     updateUI();
   };
 
@@ -352,13 +396,10 @@
         const card = document.createElement("div");
         card.className = "question-card";
 
-        // יצירת מערך תשובות חכם המכיל גם את הטקסט וגם את האינדקס המקורי
-        // כך שגם אחרי הערבוב, נדע מה היה המספר המקורי של התשובה לבדיקה
         let optionsWithIndex = q.options.map((opt, originalIndex) => {
           return { text: opt, originalIndex: originalIndex };
         });
 
-        // ערבוב התשובות באופן רנדומלי
         optionsWithIndex = shuffleArray(optionsWithIndex);
 
         card.innerHTML = `
@@ -383,7 +424,53 @@
     });
   }
 
-  // ניווט בין הטאבים
+  // --- פונקציית הטיימר ---
+  function startTimer() {
+    // 1. בדיקה האם יש זמן התחלה שמור ב-localStorage
+    let startTime = localStorage.getItem("qa_quiz_start_time");
+
+    if (!startTime) {
+      // אם אין, זה מבחן חדש - קובעים זמן עכשיו
+      startTime = Date.now();
+      localStorage.setItem("qa_quiz_start_time", startTime);
+    }
+
+    const durationMS = QUIZ_DURATION_MINUTES * 60 * 1000;
+    const timerElement = document.getElementById("quizTimer");
+
+    // עדכון הטיימר כל שנייה
+    timerInterval = setInterval(() => {
+      const now = Date.now();
+      const elapsed = now - parseInt(startTime);
+      const remaining = durationMS - elapsed;
+
+      // בדיקה אם נגמר הזמן
+      if (remaining <= 0) {
+        clearInterval(timerInterval);
+        timerElement.innerText = "⏳ 00:00";
+        alert("⏰ הזמן נגמר! המבחן מוגש אוטומטית.");
+        submitQuiz(true); // הגשה אוטומטית (עם דגל true)
+        return;
+      }
+
+      // חישוב דקות ושניות לתצוגה
+      const minutes = Math.floor(remaining / 60000);
+      const seconds = Math.floor((remaining % 60000) / 1000);
+
+      // עיצוב 00:00
+      const displayStr = `⏳ ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      timerElement.innerText = displayStr;
+
+      // אזהרה כשיש פחות מ-5 דקות
+      if (minutes < 5) {
+        timerElement.classList.add("warning");
+      } else {
+        timerElement.classList.remove("warning");
+      }
+
+    }, 1000);
+  }
+
   function changeSection(direction) {
     const sections = document.querySelectorAll(".quiz-section");
     sections[currentSection].style.display = "none";
@@ -428,7 +515,6 @@
     }
   }
 
-  // שמירה ל-localStorage
   function saveProgress() {
     const answers = {};
     const inputs = document.querySelectorAll("input[type='radio']:checked");
@@ -438,13 +524,11 @@
     localStorage.setItem("qa_quiz_answers", JSON.stringify(answers));
   }
 
-  // טעינה מ-localStorage
   function loadProgress() {
     const saved = localStorage.getItem("qa_quiz_answers");
     if (saved) {
       const answers = JSON.parse(saved);
       for (const [name, value] of Object.entries(answers)) {
-        // מכיוון שאנחנו מייצרים את הערך (value) כאינדקס המקורי, זה יעבוד גם אחרי הערבוב
         const input = document.querySelector(`input[name="${name}"][value="${value}"]`);
         if (input) input.checked = true;
       }
@@ -452,14 +536,20 @@
   }
 
   function resetQuiz() {
-    if(confirm("האם אתה בטוח? זה ימחק את כל התשובות שסימנת.")) {
+    if(confirm("האם לאפס את המבחן? זה ימחק את התשובות ואת הטיימר.")) {
       localStorage.removeItem("qa_quiz_answers");
+      localStorage.removeItem("qa_quiz_start_time"); // איפוס הטיימר
       location.reload();
     }
   }
 
-  // הגשה וחישוב ציון
-  function submitQuiz() {
+  function submitQuiz(isAutoSubmit = false) {
+    if (!isAutoSubmit && !confirm("האם אתה בטוח שברצונך להגיש את המבחן?")) return;
+
+    // עצירת הטיימר כדי שלא ימשיך לרוץ ברקע
+    clearInterval(timerInterval);
+    document.querySelector(".timer-container").style.display = "none"; // הסתרת הטיימר בתוצאות
+
     let score = 0;
     let totalQuestions = 0;
 
@@ -470,28 +560,29 @@
         const cards = document.querySelectorAll(`#section-${secIndex} .question-card`);
         const card = cards[qIndex];
         
-        // ניקוי סימונים קודמים
         const labels = card.querySelectorAll(".option-label");
         labels.forEach(l => {
           l.classList.remove("correct-answer", "wrong-answer");
+          // ביטול האפשרות לשנות תשובות אחרי הגשה
+          l.style.pointerEvents = "none";
         });
 
         if (selected) {
           const val = parseInt(selected.value);
-          // הבדיקה נעשית מול האינדקס המקורי שנשמר ב-value
           if (val === q.ans) {
             score++;
             card.querySelector(`#lbl_${secIndex}_${qIndex}_${val}`).classList.add("correct-answer");
           } else {
             card.querySelector(`#lbl_${secIndex}_${qIndex}_${val}`).classList.add("wrong-answer");
-            // סימון התשובה הנכונה
             card.querySelector(`#lbl_${secIndex}_${qIndex}_${q.ans}`).classList.add("correct-answer");
           }
+        } else {
+            // אם לא ענו - נסמן את התשובה הנכונה בכל זאת
+            card.querySelector(`#lbl_${secIndex}_${qIndex}_${q.ans}`).classList.add("correct-answer");
         }
       });
     });
 
-    // הצגת תוצאות
     document.querySelector(".nav-buttons").style.display = "none";
     document.getElementById("resultArea").style.display = "block";
     
@@ -503,7 +594,9 @@
     else if(finalScore >= 70) feedback.innerText = "👍 עבודה טובה! יש עוד קצת על מה לחזור.";
     else feedback.innerText = "📚 כדאי לעבור שוב על החומר הלימודי ולנסות שוב.";
     
-    // חזרה לטאב הראשון כדי לראות את התיקונים
+    // מחיקת זמן ההתחלה כדי שבפעם הבאה הטיימר יתאפס
+    localStorage.removeItem("qa_quiz_start_time");
+
     showSection(0);
   }
 </script>

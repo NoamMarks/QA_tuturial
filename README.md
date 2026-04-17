@@ -1,3 +1,3 @@
-# QA_tutorial
+# Software testing tutorial
 
-🌍 : https://noammarks.github.io/QA_tuturial/
+🌍 : https://noammarks.github.io/QA_tutorial/
